@@ -45,7 +45,7 @@ public class M3uFilesToPathCopy {
             sPathToCopyTo = args[1];
         } else {
             sPathToCopyTo = m3uFile.getParent() + File.separator + m3uFile.getName()
-                    .substring(0, m3uFile.getName().length() - 4);
+                    .substring(0, m3uFile.getName().lastIndexOf('.'));
         }
         System.out.println("sPathToCopyTo: " + sPathToCopyTo);
         pathToCopyTo = new File(sPathToCopyTo);
