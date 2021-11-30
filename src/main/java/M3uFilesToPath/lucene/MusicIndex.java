@@ -170,7 +170,7 @@ public class MusicIndex {
     private static Document m3uPlaylistSongDocument(M3uPlaylistSong song) {
         if (song.getSeconds() < 0) {
             throw new UnsupportedOperationException(
-                    "Foloseste winamp library pt Read metadata on selected items iar apoi salveaza playlis-tul de indexat.");
+                    "Foloseste winamp library pt Read metadata on selected items iar apoi salveaza playlist-ul de indexat.");
         }
         Document doc = new Document();
         doc.add(new Field("seconds", String.valueOf(song.getSeconds()),

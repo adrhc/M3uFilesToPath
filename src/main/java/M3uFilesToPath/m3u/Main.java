@@ -33,7 +33,7 @@ public class Main {
 
     public static final String MyPlaylistsPath = "C:\\Users\\adpetre\\Music\\Playlists\\";
     public static final String MUSIC_TEMP_DIR = "C:\\Users\\adpetre\\Temp\\Muzica\\";
-    public static final String M3UFile = MyPlaylistsPath + "MUZICA.m3u8";
+    public static final String M3UFile = MyPlaylistsPath + "MUZICA-partial.m3u8";
     public static final String duplicatesList = MUSIC_TEMP_DIR + ymd +
             " duplicated songs\\" + ymd + " duplicated songs.m3u8";
     public static final String originalList = MUSIC_TEMP_DIR + ymd +
@@ -49,7 +49,7 @@ public class Main {
         //        MusicIndex.INDEX_DIR = new File("..\\MusicIndex\\MusicIndex job " + ymd);
         //        MusicIndex.INDEX_DIR = new File("..\\MusicIndex\\MusicIndex home " + ymd);
         //        MusicIndex.INDEX_DIR = new File("..\\MusicIndex\\MusicIndex home 2012-05-10");
-        MusicIndex.INDEX_DIR = new File("..\\MusicIndex\\MusicIndex home " + ymd);
+        MusicIndex.INDEX_DIR = new File(MUSIC_TEMP_DIR + "MusicIndex home " + ymd);
         //        MusicIndex.INDEX_DIR = new File(CURRENT_ARCHIVE_DIR + "MusicIndex home 2011-03-07");
 
         //        saveFullPathInPlayList(MyPlaylistsPath + "2010-03-04 selected teac.m3u8",
