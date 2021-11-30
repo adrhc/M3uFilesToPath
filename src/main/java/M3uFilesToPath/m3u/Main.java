@@ -160,11 +160,11 @@ public class Main {
         //                               getFullPathPlayListNameFor("F:\\MUZICA\\2012-05-10 home all.m3u8"), true);
 
         // INDEXARE
-        /*M3uPlaylist m3uPlaylist = new M3uPlaylist(M3UFile, true);
+        M3uPlaylist m3uPlaylist = new M3uPlaylist(M3UFile, true);
         m3uPlaylist.setDontThrowErrForMissingFilesWhenComputingSize(false);
         m3uPlaylist.setDontComputeFileSizeIfExistsSeconds(false);
         m3uPlaylist.setDontReadTags(false);
-        m3uPlaylist.index(true);*/
+        m3uPlaylist.index(true);
 
         //        showDiffOrchestra(m3uPlaylist, true);
 

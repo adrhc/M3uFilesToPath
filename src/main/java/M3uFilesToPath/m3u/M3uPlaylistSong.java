@@ -278,7 +278,7 @@ public class M3uPlaylistSong implements Comparator<M3uPlaylistSong>, Comparable<
 	private void updateSecondsFromTags() {
 		if (seconds < 0 && tags.get("duration") != null) {
 			try {
-				seconds = (int) (Long.parseLong(tags.get("duration")) / 1000);
+				seconds = (int) (Long.parseLong(tags.get("duration")) / 1000000);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -675,7 +675,7 @@ public class M3uPlaylistSong implements Comparator<M3uPlaylistSong>, Comparable<
 	}
 
 	private String computeMp3FilePathFull(String mp3FilePath, M3uPlaylist m3uPlaylist) {
-		if (mp3FilePath.indexOf(':') < 0) {
+		if (mp3FilePath.indexOf(':') >= 0) {
 			return mp3FilePath;
 		} else if (mp3FilePath.startsWith(File.separator)) {
 			return (new File(mp3FilePath)).getAbsolutePath();

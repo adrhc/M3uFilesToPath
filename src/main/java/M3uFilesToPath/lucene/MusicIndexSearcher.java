@@ -351,12 +351,12 @@ public class MusicIndexSearcher {
 //            if (topDocs.totalHits > 1) {
 //                System.out.println("totalHits = " + topDocs.totalHits + ": " + songToSearch);
 //            }
-            List<Map<String, String>> rez = new ArrayList<Map<String, String>>();
+            List<Map<String, String>> rez = new ArrayList<>();
             Document doc;
             Map<String, String> map;
             for (int j = 0; j < topDocs.totalHits && j < resultPerSong; j++) {
                 doc = searcher.doc(topDocs.scoreDocs[j].doc);
-                map = new HashMap<String, String>();
+                map = new HashMap<>();
                 map.put("score", String.valueOf(topDocs.scoreDocs[j].score));
                 map.put("query", expression);
                 Field field;
