@@ -362,10 +362,12 @@ public class M3uPlaylist {
 					continue;
 				}
 				writer.print(detailsHeaderPrefix);
-				writer.print(song.getSeconds());
 				if (song.getRawMp3Details() != null) {
+					writer.print(song.getSeconds());
 					writer.print(',');
 					writer.println(song.getRawMp3Details());
+				} else {
+					writer.println(song.getSeconds());
 				}
 				if (writeFullMp3PathToM3u) {
 					writer.println(song.getMp3FilePathFull());

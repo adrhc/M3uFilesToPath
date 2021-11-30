@@ -886,7 +886,7 @@ public class M3uPlaylistSong implements Comparator<M3uPlaylistSong>, Comparable<
 			if (m3uPlaylist.getDontThrowErrForMissingFilesWhenComputingSize()) {
 				return;
 			}
-			throw new RuntimeException(mp3FileFullPath + " NU exista !");
+			throw new RuntimeException(mp3FileFullPath + " NU exista!");
 		}
 	}
 
