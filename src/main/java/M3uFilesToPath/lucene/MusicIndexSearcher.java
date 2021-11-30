@@ -110,7 +110,7 @@ public class MusicIndexSearcher {
     }
 
     public List<M3uPlaylistSong> searchSong(M3uPlaylistSong songToSearch) {
-        List<M3uPlaylistSong> songs = new ArrayList<M3uPlaylistSong>();
+        List<M3uPlaylistSong> songs = new ArrayList<>();
 //        if (songToSearch.getMp3FilePathFull().indexOf("Beat6324.mp3") > 0) {
 //            System.out.println("");
 //        }
@@ -344,7 +344,7 @@ public class MusicIndexSearcher {
                 } else {
                     System.out.println("\n" + songToSearch);
                     System.out.println(expression);
-                    System.out.println(topDocs.totalHits + " rezults (TQuery): " + booleanQuery.toString());
+                    System.out.println(topDocs.totalHits + " rezults (TQuery): " + booleanQuery);
                     return null;
                 }
             }

@@ -675,14 +675,16 @@ public class M3uPlaylistSong implements Comparator<M3uPlaylistSong>, Comparable<
 	}
 
 	private String computeMp3FilePathFull(String mp3FilePath, M3uPlaylist m3uPlaylist) {
-		if (mp3FilePath.indexOf(':') < 0 && !mp3FilePath.startsWith(File.separator)) {
+		if (mp3FilePath.indexOf(':') < 0) {
+			return mp3FilePath;
+		} else if (mp3FilePath.startsWith(File.separator)) {
+			return (new File(mp3FilePath)).getAbsolutePath();
+		} else {
 			if (m3uPlaylist == null || m3uPlaylist.getM3uFilePath() == null) {
 				return null;
 			}
 			String basePath = (new File(m3uPlaylist.getM3uFilePath())).getParent();
 			return (new File(basePath + File.separatorChar + mp3FilePath)).getAbsolutePath();
-		} else {
-			return (new File(mp3FilePath)).getAbsolutePath();
 		}
 	}
 

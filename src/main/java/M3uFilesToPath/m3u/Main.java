@@ -160,11 +160,11 @@ public class Main {
         //                               getFullPathPlayListNameFor("F:\\MUZICA\\2012-05-10 home all.m3u8"), true);
 
         // INDEXARE
-        M3uPlaylist m3uPlaylist = new M3uPlaylist(M3UFile, true);
+        /*M3uPlaylist m3uPlaylist = new M3uPlaylist(M3UFile, true);
         m3uPlaylist.setDontThrowErrForMissingFilesWhenComputingSize(false);
         m3uPlaylist.setDontComputeFileSizeIfExistsSeconds(false);
         m3uPlaylist.setDontReadTags(false);
-        m3uPlaylist.index(true);
+        m3uPlaylist.index(true);*/
 
         //        showDiffOrchestra(m3uPlaylist, true);
 
@@ -583,19 +583,17 @@ public class Main {
         final M3uPlaylist m3uPlaylistNotConverted = new M3uPlaylist(
                 Util.suffixPath(m3uPlaylist, " - not found"), true);
         if (writeNewM3u) {
-            final List<M3uPlaylistSong> searchedAndFound = new ArrayList<M3uPlaylistSong>();
+            final List<M3uPlaylistSong> searchedAndFound = new ArrayList<>();
 
-            m3uPlaylistCONVERTED.write(new SongFilter() {
-                public boolean accept(M3uPlaylistSong song) {
-                    M3uPlaylistSong searchedSong = (M3uPlaylistSong) song.getMisc("searchedSong");
-                    searchedAndFound.add(searchedSong);
-                    if (song.getMisc("keep") != null) {
-                        int count = writtenSizeMap.get("writtenSize") + 1;
-                        writtenSizeMap.put("writtenSize", count);
-                        return true;
-                    }
-                    return false;
+            m3uPlaylistCONVERTED.write(song -> {
+                M3uPlaylistSong searchedSong = (M3uPlaylistSong) song.getMisc("searchedSong");
+                searchedAndFound.add(searchedSong);
+                if (song.getMisc("keep") != null) {
+                    int count = writtenSizeMap.get("writtenSize") + 1;
+                    writtenSizeMap.put("writtenSize", count);
+                    return true;
                 }
+                return false;
             });
 
             for (M3uPlaylistSong song : m3uPlaylist.getSongs()) {
