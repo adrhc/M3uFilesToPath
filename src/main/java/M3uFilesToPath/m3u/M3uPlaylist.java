@@ -48,8 +48,8 @@ public class M3uPlaylist {
 
     // #EXTINF:n,Artist - Title
     // path\fileName.mp3
-//    #EXTINF:110,Corul "Madrigal" - Leagãnul lui Isus
-//    New\Colinde Corul Madrigal\Leaganul lui Isus.mp3
+    //    #EXTINF:110,Corul "Madrigal" - LeagÄƒnul lui Isus
+    //    New\Colinde Corul Madrigal\Leaganul lui Isus.mp3
 
     public M3uPlaylist(boolean initSongs) {
         this(null, initSongs);
