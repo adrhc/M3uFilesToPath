@@ -182,9 +182,9 @@ public class MusicIndexSearcher {
             songMatch = songToSearch.getPerfectMatchSong(songs, this);
             if (songMatch == null) {
                 if (throwErrorOnPerfectMatchNotFound) {
-                    throw new UnsupportedOperationException("No match !");
+                    throw new UnsupportedOperationException("No match!");
                 } else {
-                    return new ArrayList<M3uPlaylistSong>();
+                    return new ArrayList<>();
                 }
             }
         } else {

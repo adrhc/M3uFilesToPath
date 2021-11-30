@@ -160,11 +160,11 @@ public class Main {
         //                               getFullPathPlayListNameFor("F:\\MUZICA\\2012-05-10 home all.m3u8"), true);
 
         // INDEXARE
-        M3uPlaylist m3uPlaylist = new M3uPlaylist(M3UFile, true);
+        /*M3uPlaylist m3uPlaylist = new M3uPlaylist(M3UFile, true);
         m3uPlaylist.setDontThrowErrForMissingFilesWhenComputingSize(false);
         m3uPlaylist.setDontComputeFileSizeIfExistsSeconds(false);
         m3uPlaylist.setDontReadTags(false);
-        m3uPlaylist.index(true);
+        m3uPlaylist.index(true);*/
 
         //        showDiffOrchestra(m3uPlaylist, true);
 
@@ -182,7 +182,7 @@ public class Main {
         //                1f, false, false, false);
         //        convertPlayList(MyPlaylistsPath + "2010-03-04 selected teac.m3u", true, null, true, 5f, true);
         //        convertPlayList(MyPlaylistsPath + "New Music Home.m3u", true, null, false, 1f, false);
-        convertPlayList(MyPlaylistsPath + "sport+uti.m3u8", true, null, false, 1f, false);
+        convertPlayList(MyPlaylistsPath + "sport+uti - test.m3u8", true, null, false, 1f, false);
 
         //        extractDuplicatesFromPlayList("d:\\Projects\\M3uFilesToPath\\MusicIndex\\2011-02-09 HOME f-muzica.m3u8", 10f);
         //        extractDuplicatesFromPlayList(getFullPathPlayListNameFor(M3UFile), 40f);

@@ -712,7 +712,7 @@ public class M3uPlaylistSong implements Comparator<M3uPlaylistSong>, Comparable<
 	public String toString(boolean showDetails, boolean showFilePath,
 			boolean showMp3FilePathParts, String[] miscToShow) {
 		StringBuilder sb = new StringBuilder();
-		if (this.getM3uPlaylist().getLoadedFromDevice()) {
+		if (this.getM3uPlaylist() != null && this.getM3uPlaylist().getLoadedFromDevice()) {
 			sb.append("My Computer\\WALKMAN\\Storage Media\\MUSIC\\");
 			sb.append(mp3FilePath);
 			return sb.toString();
