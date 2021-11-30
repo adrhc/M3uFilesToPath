@@ -1,6 +1,6 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>M3uFilesToPath</groupId>
 	<artifactId>M3uFilesToPath</artifactId>
@@ -16,100 +16,121 @@
 
 	<dependencies>
 
+		<!-- https://mvnrepository.com/artifact/net.sf.javamusictag/jid3lib -->
 		<dependency>
-			<groupId>audio.blinkenlights</groupId>
-			<artifactId>jid3</artifactId>
-			<version>0.46</version>
-			<scope>provided</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>audio</groupId>
-			<artifactId>jl</artifactId>
-			<version>1.0.1</version>
-			<scope>provided</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>audio</groupId>
-			<artifactId>mp3spi</artifactId>
-			<version>1.9.5</version>
-			<scope>provided</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>audio</groupId>
-			<artifactId>tritonus_share</artifactId>
-			<version>1.0</version>
-			<scope>provided</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>audio</groupId>
-			<artifactId>jid3</artifactId>
+			<groupId>net.sf.javamusictag</groupId>
+			<artifactId>jid3lib</artifactId>
 			<version>0.5.4</version>
-			<scope>provided</scope>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/org.blinkenlights.jid3/JID3 -->
 		<dependency>
-			<groupId>lucene</groupId>
-			<artifactId>lucene</artifactId>
+			<groupId>org.blinkenlights.jid3</groupId>
+			<artifactId>JID3</artifactId>
+			<version>0.46</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/javazoom/jlayer -->
+		<dependency>
+			<groupId>javazoom</groupId>
+			<artifactId>jlayer</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.googlecode.soundlibs/mp3spi -->
+		<dependency>
+			<groupId>com.googlecode.soundlibs</groupId>
+			<artifactId>mp3spi</artifactId>
+			<version>1.9.5.4</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.googlecode.soundlibs/tritonus-share -->
+		<dependency>
+			<groupId>com.googlecode.soundlibs</groupId>
+			<artifactId>tritonus-share</artifactId>
+			<version>0.3.7.4</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.apache.lucene/lucene-core -->
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-core</artifactId>
 			<version>2.9.4</version>
-			<scope>provided</scope>
 		</dependency>
 
-		<dependency>
+		<!--<dependency>
 			<groupId>lucene</groupId>
 			<artifactId>lucene-demos</artifactId>
 			<version>2.9.4</version>
 			<scope>provided</scope>
+		</dependency>-->
+
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.2</version>
+			<scope>provided</scope>
 		</dependency>
 
-        <dependency>
-            <groupId>commons-logging</groupId>
-            <artifactId>commons-logging</artifactId>
-            <version>1.1</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.12</version>
-            <scope>provided</scope>
-        </dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+			<scope>provided</scope>
+		</dependency>
 
 	</dependencies>
-	
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
-                    <optimize>true</optimize>
-                    <showDeprecation>false</showDeprecation>
-                    <showWarnings>false</showWarnings>
-                    <debug>true</debug>
-                    <verbose>false</verbose>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <configuration>
-                    <archive>
-                        <index>true</index>
-                    </archive>
-                </configuration>
-            </plugin>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>11</source>
+					<target>11</target>
+					<fork>true</fork>
+					<meminitial>256m</meminitial>
+					<maxmem>1024m</maxmem>
+					<compilerArgs>
+						<!--
+							https://maven.apache.org/plugins/maven-compiler-plugin/examples/pass-compiler-arguments.html
+
+							https://docs.oracle.com/javase/tutorial/reflect/member/methodparameterreflection.html
+							To store formal parameter names in a particular .class file, and thus enable the Reflection API to retrieve formal parameter names, compile the source file with the -parameters option to the javac compiler.
+
+							https://docs.oracle.com/javase/10/tools/javac.htm#JSWOR627
+							javac -J option
+								Passes option to the runtime system, where option is one of the Java options described on javacommand.
+								For example, -J-Xms48m sets the startup memory to 48 MB.
+						-->
+						<arg>-parameters</arg>
+					</compilerArgs>
+				</configuration>
+				<!--<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+					<optimize>true</optimize>
+					<showDeprecation>false</showDeprecation>
+					<showWarnings>false</showWarnings>
+					<debug>true</debug>
+					<verbose>false</verbose>
+				</configuration>-->
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<index>true</index>
+					</archive>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-idea-plugin</artifactId>
 				<version>2.2</version>
-                <configuration>
+				<configuration>
 					<downloadSources>true</downloadSources>
 					<downloadJavadocs>false</downloadJavadocs>
 					<dependenciesAsLibraries>true</dependenciesAsLibraries>
@@ -126,6 +147,6 @@
 				</configuration>
 			</plugin>
 		</plugins>
-    </build>
+	</build>
 
 </project>
