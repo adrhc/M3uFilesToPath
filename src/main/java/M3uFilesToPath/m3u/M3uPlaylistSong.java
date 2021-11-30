@@ -9,7 +9,6 @@ import org.farng.mp3.lyrics3.Lyrics3v1;
 import org.farng.mp3.lyrics3.Lyrics3v2;
 import org.farng.mp3.object.ObjectNumberHashMap;
 import org.farng.mp3.object.ObjectStringSizeTerminated;
-import org.tritonus.share.sampled.TAudioFormat;
 import org.tritonus.share.sampled.file.TAudioFileFormat;
 
 import javax.sound.sampled.AudioFileFormat;
@@ -271,6 +270,7 @@ public class M3uPlaylistSong implements Comparator<M3uPlaylistSong>, Comparable<
 	public void fillWithTags() {
 		fillWithTagsJavaZoom();
 		fillWithTagsJid3();
+		//		fillTagsWithJavaAudioSystem();
 		updateSecondsFromTags();
 		updateFileSizeFromTags();
 	}
@@ -332,10 +332,8 @@ public class M3uPlaylistSong implements Comparator<M3uPlaylistSong>, Comparable<
 	 * mp3.shoutcast.metadata.icy-metaint=8192
 	 * mp3.shoutcast.metadata.icy-genre=Trance Techno Dance
 	 * mp3.shoutcast.metadata.icy-url=http://www.di.fm
-	 *
-	 * @return
 	 */
-	private boolean fillWithTagsJavaZoom() {
+	private void fillWithTagsJavaZoom() {
 		try {
 			File file = new File(getMp3FilePathFull());
 			AudioFileFormat baseFileFormat;
@@ -345,22 +343,33 @@ public class M3uPlaylistSong implements Comparator<M3uPlaylistSong>, Comparable<
 			// TAudioFileFormat properties
 			if (baseFileFormat instanceof TAudioFileFormat) {
 				Map<String, Object> properties = baseFileFormat.properties();
-				//                tags.putAll(properties);
+				// tags.putAll(properties);
 				putTags(properties);
 			}
-			// TAudioFormat properties
-			if (baseFormat instanceof TAudioFormat) {
+			// TAudioFormat	or AudioFormat properties
+			if (baseFormat != null) {
 				Map<String, Object> properties = baseFormat.properties();
-				//                tags.putAll(properties);
+				// tags.putAll(properties);
 				putTags(properties);
 			}
-			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("ERR (JavaZoom) reading tags for: " + mp3FilePathFull);
 		}
-		return false;
 	}
+
+	/*private void fillTagsWithJavaAudioSystem() {
+		try {
+			URL url = new File(mp3FilePathFull).toURI().toURL();
+			AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(mp3FilePathFull));
+			AudioFormat format = audioInputStream.getFormat();
+			AudioFileFormat fformat = AudioSystem.getAudioFileFormat(url);
+			Map<String, Object> properties = fformat.properties();
+			//			tags.putAll(properties);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}*/
 
 	/**
 	 * @return
