@@ -182,7 +182,8 @@ public class Main {
         //                1f, false, false, false);
         //        convertPlayList(MyPlaylistsPath + "2010-03-04 selected teac.m3u", true, null, true, 5f, true);
         //        convertPlayList(MyPlaylistsPath + "New Music Home.m3u", true, null, false, 1f, false);
-        convertPlayList(MyPlaylistsPath + "sport+uti - test.m3u8", true, null, false, 1f, false);
+        //        convertPlayList(MyPlaylistsPath + "sport+uti - test.m3u8", true, null, false, 1f, false);
+        convertPlayList(MyPlaylistsPath + "sport+uti.m3u8", true, null, false, 1f, false);
 
         //        extractDuplicatesFromPlayList("d:\\Projects\\M3uFilesToPath\\MusicIndex\\2011-02-09 HOME f-muzica.m3u8", 10f);
         //        extractDuplicatesFromPlayList(getFullPathPlayListNameFor(M3UFile), 40f);

@@ -40,7 +40,7 @@ public class M3uPlaylistSong implements Comparator<M3uPlaylistSong>, Comparable<
 	//            "do", "flac", "for", "in", "la", "mp3", "new", "of", "on", "or", "pe", "sa", "si", "the",
 	//            "top", "wav", "wma", "[various]"};
 	//    private static final String[] ignoreForPrefix = {"track"};
-	public static final float MAX_IN_MEMORY_SCORE_DEV = 0.7f;
+	public static final float MAX_IN_MEMORY_SCORE_DEV = 0.9f;
 	public static final String[] TAGS_INCLUDED_IN_WORDS = { "album", "author", "comment", "mp3.id3tag.composer",
 			"mp3.id3tag.genre", "mp3.id3tag.orchestra", "mp3.id3tag.publisher", "title",
 			"jid3.Original artist(s)/performer(s)", "jid3.Involved people list",
@@ -817,13 +817,12 @@ public class M3uPlaylistSong implements Comparator<M3uPlaylistSong>, Comparable<
 				continue;
 			}
 			songLCNoExt = Util.computeFileNameNoExt(song.getMp3FileName()).toLowerCase();
-			if (songLCNoExt.indexOf(mp3FileNameLCNoExt) >= 0 || mp3FileNameLCNoExt
-					.indexOf(songLCNoExt) >= 0) {
+			if (songLCNoExt.contains(mp3FileNameLCNoExt) || mp3FileNameLCNoExt.contains(songLCNoExt)) {
 				return song;
 			}
 			commons = Util.getEquals(words, song.getWords());
 			if (commons.isEmpty()) {
-				// song nu are nici un cuvand in comun cu this
+				// song nu are nici un cuvant in comun cu this
 				continue;
 			}
 			songsFoundInMem = searcher.searchSongInMemory(this, song, 2);
@@ -840,10 +839,11 @@ public class M3uPlaylistSong implements Comparator<M3uPlaylistSong>, Comparable<
 		if (songsInFoundMem.size() < 2) {
 			return false;
 		}
-		Float original = Float.parseFloat((String) songsInFoundMem.get(0).getMisc("score"));
-		Float copy = Float.parseFloat((String) songsInFoundMem.get(1).getMisc("score"));
+		float original = Float.parseFloat((String) songsInFoundMem.get(0).getMisc("score"));
+		float copy = Float.parseFloat((String) songsInFoundMem.get(1).getMisc("score"));
 		float inMemScoreDev = (original - copy) / original;
 		songsInFoundMem.get(0).putMisc("inMemScoreDev", String.valueOf(inMemScoreDev));
+		System.out.println(this.getMp3FilePath() + ": inMemScoreDev = " + inMemScoreDev);
 		return inMemScoreDev <= MAX_IN_MEMORY_SCORE_DEV;
 	}
 
