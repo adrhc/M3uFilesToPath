@@ -1,0 +1,187 @@
+rem md eTaxMaven
+rem cd eTaxMaven
+
+*.java;*.jsp;*.properties;*.js;*.jar;*.zip;*.jacl;*.bat;*.lib;*.uti;*.dim;*.xml;*.gif;*.jpeg;*.jpg;*.png
+
+*.java;*.jsp;*.properties;*.js;*.jar;*.zip;*.jacl;*.bat;*.lib;*.uti;*.dim;*.xml
+
+*.java OR *.jsp OR *.properties OR *.js OR *.jar OR *.zip OR *.jacl OR *.bat OR *.lib OR *.uti OR *.dim OR *.xml OR *.gif OR *.jpeg OR *.jpg OR *.png
+
+*.java OR *.jsp OR *.properties OR *.js OR *.jar OR *.zip OR *.jacl OR *.jacl OR *.bat OR *.lib OR *.uti OR *.dim OR *.xml
+
+set M2_HOME=c:\maven
+set Path=%M2_HOME%\bin;%path%
+set ETAX_HOME=F:\ETAX
+set JBOSS_HOME=C:\jboss
+
+mvn archetype:create -DgroupId=SDMS -DartifactId=SDMSEar -DarchetypeArtifactId=maven-archetype-ear
+mvn -e archetype:create -DgroupId=SDMS -DartifactId=SDMSEar -DarchetypeArtifactId=maven-archetype-quickstart
+
+mvn -o archetype:create -DgroupId=M3uFilesToPath -DartifactId=M3uFilesToPath
+mvn -o archetype:create -DgroupId=SDMS -DartifactId=SDMSIndexSearcherComm
+mvn -o archetype:create -DgroupId=SDMS -DartifactId=SDMSIndexSearcher
+mvn -o archetype:create -DgroupId=SDMS -DartifactId=SDMSHighlightComm
+mvn -o archetype:create -DgroupId=SDMS -DartifactId=SDMSHighlight
+mvn -o archetype:create -DgroupId=SDMS -DartifactId=SDMSJTags
+mvn -o archetype:create -DgroupId=SDMS -DartifactId=SDMSDiagnostic
+mvn -o archetype:create -DgroupId=SDMS -DartifactId=SDMSToolsComm
+mvn -o archetype:create -DgroupId=SDMSWFEngine -DartifactId=SDMSWFToolsComm
+mvn -o archetype:create -DgroupId=SDMS -DartifactId=SDMSTools -DarchetypeArtifactId=maven-archetype-webapp
+
+mvn -o archetype:create -DgroupId=eTax -DartifactId=eTaxComm
+mvn -o archetype:create -DgroupId=eTax -DartifactId=eTaxEJB -Dpackage=ejb
+mvn -o archetype:create -DgroupId=eTax -DartifactId=eTaxWebappComm
+mvn -o archetype:create -DgroupId=eTax -DartifactId=eTaxWebapp -DarchetypeArtifactId=maven-archetype-webapp
+mvn -o archetype:create -DgroupId=eTax -DartifactId=eTaxFrontOffice -DarchetypeArtifactId=maven-archetype-webapp
+mvn -o archetype:create -DgroupId=eTax -DartifactId=eTaxEAR -DarchetypeArtifactId=maven-archetype-ear
+mvn -o archetype:create -DgroupId=eTax -DartifactId=eTaxEARWas -DarchetypeArtifactId=maven-archetype-ear
+mvn -o archetype:create -DgroupId=eTax -DartifactId=eTaxTest
+
+mvn archetype:create -DgroupId=uti.base -DartifactId=BaseComm
+mvn archetype:create -DgroupId=uti.base -DartifactId=BaseEJB
+mvn archetype:create -DgroupId=uti.base -DartifactId=BaseWebapp
+
+mvn archetype:create -DarchetypeVersion=1.0-alpha-4 -DgroupId=tryprojects -DartifactId=HibernateTry
+
+mvn clean
+mvn compile
+mvn package
+mvn idea:idea
+F:\JavaDoc\text-mining
+
+mvn install:install-file -DgroupId=audio -DartifactId=jl -Dversion=1.0.1 -Dpackaging=jar -Dfile="f:\JavaDoc\JavaZoom\MpegAudioSPI1.9.5\lib\jl1.0.1.jar"
+mvn install:install-file -DgroupId=audio -DartifactId=tritonus_share -Dversion=1.0 -Dpackaging=jar -Dfile="f:\JavaDoc\JavaZoom\MpegAudioSPI1.9.5\lib\tritonus_share.jar"
+mvn install:install-file -DgroupId=audio -DartifactId=mp3spi -Dversion=1.9.5 -Dpackaging=jar -Dfile="f:\JavaDoc\JavaZoom\MpegAudioSPI1.9.5\mp3spi1.9.5.jar"
+mvn install:install-file -DgroupId=audio -DartifactId=jid3 -Dversion=0.5.4 -Dpackaging=jar -Dfile="F:\JavaDoc\Java ID3 Tag Library\jid3lib-0.5.4\dist\jid3lib-0.5.4.jar"
+mvn install:install-file -DgroupId=audio.blinkenlights -DartifactId=jid3 -Dversion=0.46 -Dpackaging=jar -Dfile="f:\JavaDoc\jid3.blinkenlights.org\jid3_0.46\dist\JID3.jar"
+
+mvn install:install-file -DgroupId=javax.servlet.jsp -DartifactId=jstl -Dversion=1.1.2 -Dpackaging=jar -Dfile=F:\JavaDoc\jstl\jakarta-taglibs-standard-1.1.2\jakarta-taglibs-standard-1.1.2\lib\jakarta-jstl-1.1.2.jar
+mvn install:install-file -DgroupId=org.apache.taglibs -DartifactId=standard -Dversion=1.1.2 -Dpackaging=jar -Dfile=F:\JavaDoc\jstl\jakarta-taglibs-standard-1.1.2\jakarta-taglibs-standard-1.1.2\lib\jakarta-standard-1.1.2.jar
+
+mvn install:install-file -DgroupId=javax.servlet.jsp -DartifactId=jstl -Dversion=1.2 -Dpackaging=jar -Dfile=F:\JavaDoc\jstl\sun-jstl-impl-1.2\sun-jstl-api-1.2.jar
+mvn install:install-file -DgroupId=org.apache.taglibs -DartifactId=standard -Dversion=1.2 -Dpackaging=jar -Dfile=F:\JavaDoc\jstl\sun-jstl-impl-1.2\sun-jstl-impl-1.2.jar
+
+mvn install:install-file -DgroupId=org.directwebremoting -DartifactId=dwr -Dversion=3.0.0.116.rc1 -Dpackaging=jar -Dfile=F:\JavaDoc\DWR\dwr-3.rc1.jar
+mvn install:install-file -DgroupId=org.textmining -DartifactId=tm-extractors -Dversion=1.0 -Dpackaging=jar -Dfile=F:\JavaDoc\text-mining\tm-extractors-1.0.jar
+mvn install:install-file -DgroupId=lucene -DartifactId=lucene -Dversion=2.9.3 -Dpackaging=jar -Dfile=F:\JavaDoc\lucene-2.9.3\lucene-core-2.9.3.jar
+mvn install:install-file -DgroupId=lucene -DartifactId=lucene-demos -Dversion=2.9.3 -Dpackaging=jar -Dfile=F:\JavaDoc\lucene-2.9.3\lucene-demos-2.9.3.jar
+mvn install:install-file -DgroupId=lucene -DartifactId=lucene -Dversion=2.9.0 -Dpackaging=jar -Dfile=F:\JavaDoc\lucene-2.9.0\lucene-core-2.9.0.jar
+mvn install:install-file -DgroupId=lucene -DartifactId=lucene-demos -Dversion=2.9.0 -Dpackaging=jar -Dfile=F:\JavaDoc\lucene\lucene-2.9.0\lucene-demos-2.9.0.jar
+mvn install:install-file -DgroupId=lucene -DartifactId=lucene -Dversion=2.9.0 -Dpackaging=jar -Dfile=F:\JavaDoc\lucene\lucene-2.9.0\lucene-core-2.9.0.jar
+mvn install:install-file -DgroupId=lucene -DartifactId=lucene-demos -Dversion=2.9.0 -Dpackaging=jar -Dfile=F:\JavaDoc\lucene-2.9.0\lucene-demos-2.9.0.jar
+mvn install:install-file -DgroupId=org.apache.lucene -DartifactId=lucene-highlighter -Dversion=2.9.3 -Dpackaging=jar -Dfile=f:\JavaDoc\lucene\lucene-2.9.3\contrib\highlighter\lucene-highlighter-2.9.3.jar
+mvn install:install-file -DgroupId=org.apache.lucene -DartifactId=lucene-highlighter -Dversion=2.4.1 -Dpackaging=jar -Dfile=H:\Projects\kit-lucene\lucene-2.4.1\contrib\highlighter\lucene-highlighter-2.4.1.jar
+mvn install:install-file -DgroupId=trove -DartifactId=trove -Dversion=1.1b5 -Dpackaging=jar -Dfile=F:\JavaDoc\trove\trove-1.1b5\lib\trove.jar
+mvn install:install-file -DgroupId=jgroups -DartifactId=jgroups -Dversion=2.4.5.GA -Dpackaging=jar -Dfile=F:\JavaDoc\JGroups\JGroups-2.4.5.GA.bin\jgroups-all.jar
+mvn install:install-file -DgroupId=jgroups -DartifactId=jgroups -Dversion=2.7.0.GA -Dpackaging=jar -Dfile=F:\JavaDoc\JGroups\JGroups-2.7.0.GA.bin\jgroups-all.jar
+mvn install:install-file -DgroupId=jgroups -DartifactId=jgroups -Dversion=2.9.0.GA -Dpackaging=jar -Dfile=F:\JavaDoc\JGroups\JGroups-2.9.0.GA.bin\jgroups-2.9.0.GA.jar
+mvn install:install-file -Dfile=F:\JavaDoc\test\strutstest214-1.2_2.4\strutstest-2.1.4.jar -DgroupId=strutstestcase -DartifactId=strutstestcase -Dversion=2.1.4-1.2-2.4 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\JavaDoc\OSCache\oscache-2.4.1.jar -DgroupId=opensymphony -DartifactId=oscache -Dversion=2.4.1 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\JavaDoc\OSCache\lib\jgroups-all.jar -DgroupId=jgroups -DartifactId=jgroups -Dversion=2.2.8 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\JavaDoc\ibatis\ibatis-2.3.0.677\lib\ibatis-2.3.0.677.jar -DgroupId=com.ibatis -DartifactId=ibatis2-sqlmap -Dversion=2.3.0.677 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\JavaDoc\ibatis\ibatis-2.3.3.720\lib\ibatis-2.3.3.720.jar -DgroupId=com.ibatis -DartifactId=ibatis2-sqlmap -Dversion=2.3.3.720 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\JavaDoc\ibatis\ibatis-2.3.4.726\lib\ibatis-2.3.4.726.jar -DgroupId=com.ibatis -DartifactId=ibatis2-sqlmap -Dversion=2.3.4.726 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\SDMS-Docs\trunk\apps\lib-ext-productie 2008-04-04\asn1.jar -DgroupId=EmailerSafe -DartifactId=asn1 -Dversion=0.9 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\SDMS\apps\project\lib\JimiProClasses.zip -DgroupId=SDMS -DartifactId=JimiProClasses -Dversion=1.0 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\SDMS\apps\project\lib\velocity-tools-view-1.0.jar -DgroupId=velocity-tools -DartifactId=velocity-tools-view -Dversion=1.0 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\SDMS\apps\project\lib\velocity-1.4.jar -DgroupId=velocity -DartifactId=velocity -Dversion=1.4 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\SDMS\apps\project\lib\PDFBox-0.7.2-log4j.jar -DgroupId=SDMS -DartifactId=PDFBox -Dversion=0.7.2-log4j -Dpackaging=jar
+mvn install:install-file -Dfile=F:\SDMS\apps\project\lib\jsafeWithNative.jar -DgroupId=SDMS -DartifactId=jsafeWithNative -Dversion=1.0 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\SDMS\apps\project\lib\chart.jar -DgroupId=chart -DartifactId=chart -Dversion=1.0 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\JavaDoc\struts\jakarta-struts-1.2.4\contrib\struts-el\lib\struts-el.jar -DgroupId=struts -DartifactId=struts-el -Dversion=1.2.4 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\JavaDoc\jstl\jstl1.0\jakarta-taglibs-standard-1.0.6\lib\standard.jar -DgroupId=taglibs -DartifactId=standard -Dversion=1.0.6 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\JavaDoc\jstl\jstl1.0\jakarta-taglibs-standard-1.0.6\lib\jstl.jar -DgroupId=javax.servlet -DartifactId=jstl -Dversion=1.0.6 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\Temp\struts-1.2.4-sdms\struts-1.2.4-sdms.zip -DgroupId=SDMS -DartifactId=struts -Dversion=1.2.4 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\JavaDoc\struts\jakarta-struts-1.2.4\lib\struts-1.2.4.jar -DgroupId=struts -DartifactId=struts -Dversion=1.2.4 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\SDMS-Dev\trunk\j2eeresources\lib\was6-build-info\was6-build-info.jar -DgroupId=SDMS -DartifactId=was6-build-info -Dversion=1.0 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\SDMS-Dev\trunk\j2eeresources\lib\was5-build-info\was5-build-info.jar -DgroupId=SDMS -DartifactId=was5-build-info -Dversion=1.0 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\SDMS-Dev\trunk\j2eeresources\lib\jboss-build-info\jboss-build-info.jar -DgroupId=SDMS -DartifactId=jboss-build-info -Dversion=1.0 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\SDMS\apps\project\lib\Itext.zip -DgroupId=SDMS -DartifactId=itext -Dversion=1.0 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\SDMS\apps\project\lib\struts.jar -DgroupId=SDMS -DartifactId=struts -Dversion=1.2.4 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\SDMS\apps\project\lib\commons-validator.jar -DgroupId=SDMS -DartifactId=commons-validator -Dversion=1.1.3 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\SDMS\apps\project\lib\xmlgraphics-commons.jar -DgroupId=org.apache.xmlgraphics -DartifactId=xmlgraphics-commons -Dversion=1.0 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\JavaDoc\FOP\fop-0.95-bin\lib\xmlgraphics-commons-1.3.1.jar -DgroupId=org.apache.xmlgraphics -DartifactId=xmlgraphics-commons -Dversion=1.3.1 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\SDMS\apps\project\lib\avalon-framework-cvs-20020806.jar -DgroupId=SDMS -DartifactId=avalon-framework-cvs -Dversion=20020806 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\JavaDoc\FOP\fop-0.95-bin\lib\batik-all-1.7.jar -DgroupId=batik -DartifactId=batik -Dversion=1.7 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\JavaDoc\FOP\fop-0.95-bin\lib\avalon-framework-4.2.0.jar -DgroupId=avalon -DartifactId=avalon-framework -Dversion=4.2.0 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\JavaDoc\FOP\fop-0.95-bin\build\fop.jar -DgroupId=xmlgraphics -DartifactId=fop -Dversion=0.95 -Dpackaging=jarmvn install:install-file -Dfile=F:\JavaDoc\FOP\fop-0.95-bin\build\fop.jar -DgroupId=xmlgraphics -DartifactId=fop -Dversion=0.95 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\SDMS\apps\project\lib\fop.jar -DgroupId=SDMS -DartifactId=fop -Dversion=2.0 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\SDMS\apps\project\lib\fop.jar -DgroupId=SDMS -DartifactId=fop -Dversion=1.0 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\JavaDoc\spring\spring-framework-2.5.1-with-dependencies\dist\modules\spring-webmvc-struts.jar -DgroupId=org.springframework -DartifactId=spring-webmvc-struts -Dversion=2.5.1 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\JavaDoc\spring\spring-framework-2.5.1-with-dependencies\dist\spring.jar -DgroupId=org.springframework -DartifactId=spring -Dversion=2.5.1 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\SDMS\apps\project\lib\commons-fileupload-20061012.jar -DgroupId=SDMS -DartifactId=commons-fileupload -Dversion=20061012 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\SDMS\apps\project\lib\batik.jar -DgroupId=SDMS -DartifactId=batik -Dversion=1.0 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\SDMS\apps\project\lib\avalon-framework-cvs-20020806.jar -DgroupId=avalon -DartifactId=avalon-framework -Dversion=4.1.2 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\SDMS\apps\project\lib\sign1.jar -DgroupId=SDMS -DartifactId=sign1 -Dversion=1.0 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\SDMS\apps\project\lib\fop.jar -DgroupId=xmlgraphics -DartifactId=fop -Dversion=0.93 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\SDMS\apps\project\lib\JREngine.zip -DgroupId=SDMS -DartifactId=JREngine -Dversion=1.0 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\SDMS\apps\project\lib\certjWithNative.jar -DgroupId=SDMS -DartifactId=certjWithNative -Dversion=1.0 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\SDMS\apps\project\lib\jdom.jar -DgroupId=jdom -DartifactId=jdom -Dversion=1.0beta10 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\JavaDoc\jdom\jdom-1.1.1\build\jdom.jar -DgroupId=jdom -DartifactId=jdom -Dversion=1.1.1 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\SDMS\apps\project\lib\poi-3.0-alpha2-20060616.jar -DgroupId=SDMS -DartifactId=poi -Dversion=3.0-alpha2-20060616-2.0 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\SDMS\apps\project\lib\poi-3.0-alpha2-20060616.jar -DgroupId=SDMS -DartifactId=poi -Dversion=3.0-alpha2-20060616 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\SDMS\apps\project\lib\poi-scratchpad-3.0-alpha2-20060616.jar -DgroupId=SDMS -DartifactId=scratchpad -Dversion=3.0-alpha2-20060616 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\SDMS\apps\project\lib\poiHSSF_151.jar -DgroupId=SDMS -DartifactId=poiHSSF -Dversion=151 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\SDMS\apps\project\lib\htmlparser.jar -DgroupId=SDMS -DartifactId=htmlparser -Dversion=1.0 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\SDMS\apps\project\lib\poi-scratchpad-3.0-alpha2-20060616.jar -DgroupId=poi -DartifactId=poi-scratchpad -Dversion=3.0-alpha2-20060616 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\SDMS\apps\project\lib\safedelete_ws.jar -DgroupId=uti.components -DartifactId=safedelete-ws -Dversion=1.0 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\SDMS\apps\project\lib\safedelete.jar -DgroupId=uti.components -DartifactId=safedelete -Dversion=1.0 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\JavaDoc\spring\spring-framework-1.2.6\dist\spring.jar -DgroupId=springframework -DartifactId=spring -Dversion=1.2.6 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\JavaDoc\spring\spring-framework-1.2.8\dist\spring.jar -DgroupId=springframework -DartifactId=spring -Dversion=1.2.8 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\JavaDoc\jta\jta-1_0_1B-classes\jta-1_0_1B-classes.zip -DgroupId=javax.transaction -DartifactId=jta -Dversion=1.0.1B -Dpackaging=jar
+mvn install:install-file -Dfile=F:\JavaDoc\jta\jta-1_0_1B-classes\jta-1_0_1B-classes.zip -DgroupId=jta -DartifactId=jta -Dversion=1.0.1B -Dpackaging=jar
+mvn install:install-file -Dfile="C:\Temp\SDMS\client-package\2009 Nov 26\ojdbc-9.2.0.8.jar" -DgroupId=ojdbc -DartifactId=ojdbc -Dversion=9.2.0.8 -Dpackaging=jar
+mvn install:install-file -Dfile="F:\JavaDoc\jdbc-oracle\Oracle9i 9.0.1 JDBC Drivers\classes12.zip" -DgroupId=ojdbc -DartifactId=ojdbc -Dversion=9.0.1 -Dpackaging=jar
+mvn install:install-file -Dfile="F:\JavaDoc\jdbc-oracle\Oracle9i 9.0.1.4 JDBC Drivers\classes12.zip" -DgroupId=ojdbc -DartifactId=ojdbc -Dversion=9.0.1.4 -Dpackaging=jar
+mvn install:install-file -Dfile="F:\JavaDoc\jdbc-oracle\Oracle9i 9.2.0.1 ojdbc14.jar" -DgroupId=ojdbc -DartifactId=ojdbc -Dversion=9.2.0.1 -Dpackaging=jar
+mvn install:install-file -Dfile="F:\JavaDoc\jdbc-oracle\Oracle Database 10g 10.1.0.2 classes12.jar" -DgroupId=ojdbc -DartifactId=ojdbc_classes12 -Dversion=10.1.0.2 -Dpackaging=jar
+mvn install:install-file -Dfile="F:\JavaDoc\jdbc-oracle\Oracle Database 10g 10.1.0.2 classes12_debug.jar" -DgroupId=ojdbc -DartifactId=ojdbc_classes12_debug -Dversion=10.1.0.2 -Dpackaging=jar
+mvn install:install-file -Dfile="F:\JavaDoc\ojdbc\Oracle Database 10g 10.2.0.4 ojdbc14&15.jar" -DgroupId=ojdbc -DartifactId=ojdbc -Dversion=10.2.0.4 -Dpackaging=jar
+mvn install:install-file -Dfile="F:\JavaDoc\jdbc-oracle\Oracle Database 10g 10.1.0.2 ojdbc14.jar" -DgroupId=ojdbc -DartifactId=ojdbc -Dversion=10.1.0.2 -Dpackaging=jar
+mvn install:install-file -Dfile="F:\JavaDoc\jdbc-oracle\Oracle Database 10g 10.1.0.2 ojdbc14_debug.jar" -DgroupId=ojdbc -DartifactId=ojdbc14_debug -Dversion=10.1.0.2 -Dpackaging=jar
+mvn install:install-file -Dfile="%ETAX_HOME%\apps\project\lib\gif.jar" -DgroupId=graphics -DartifactId=gif.ranab -Dversion=1.0 -Dpackaging=jar
+mvn install:install-file -Dfile="%ETAX_HOME%\apps\project\lib\jpdisplaytag2_0_b.jar" -DgroupId=jportal -DartifactId=jpdisplaytag -Dversion=2.0.b -Dpackaging=jar
+mvn install:install-file -Dfile="%ETAX_HOME%\apps\project\lib\bcprov-jdk14-120.jar" -DgroupId=bcprov -DartifactId=bcprov-jdk14-120 -Dversion=1.0 -Dpackaging=jar
+mvn install:install-file -Dfile="%ETAX_HOME%\apps\project\lib\emailersafe\emsSmime.jar" -DgroupId=EmailerSafe -DartifactId=emsSmime -Dversion=1.0 -Dpackaging=jar
+mvn install:install-file -Dfile="%ETAX_HOME%\apps\project\lib\signjar\certjWithNativeModificat.jar" -DgroupId=EmailerSafe -DartifactId=certjWithNativeModificat -Dversion=1.0 -Dpackaging=jar
+mvn install:install-file -Dfile="%ETAX_HOME%\apps\project\lib\signjar\asn1.jar" -DgroupId=EmailerSafe -DartifactId=asn1 -Dversion=1.0 -Dpackaging=jar
+mvn install:install-file -Dfile="%ETAX_HOME%\apps\project\lib\signjar\charsets.jar" -DgroupId=EmailerSafe -DartifactId=charsets -Dversion=1.0 -Dpackaging=jar
+mvn install:install-file -Dfile="%ETAX_HOME%\apps\project\lib\signjar\SSigned.jar" -DgroupId=EmailerSafe -DartifactId=SSigned -Dversion=1.0 -Dpackaging=jar
+mvn install:install-file -Dfile="%ETAX_HOME%\apps\project\lib\signjar\jsafe.jar" -DgroupId=EmailerSafe -DartifactId=jsafe -Dversion=1.0 -Dpackaging=jar
+mvn install:install-file -Dfile="%ETAX_HOME%\apps\project\lib\signjar\jsafeJCE.jar" -DgroupId=EmailerSafe -DartifactId=jsafeJCE -Dversion=1.0 -Dpackaging=jar
+mvn install:install-file -Dfile="%ETAX_HOME%\apps\project\lib\signjar\jsafeWithNative.jar" -DgroupId=EmailerSafe -DartifactId=jsafeWithNative -Dversion=1.0 -Dpackaging=jar
+mvn install:install-file -Dfile="%ETAX_HOME%\apps\project\lib\signjar\OfficeLnFs.jar" -DgroupId=EmailerSafe -DartifactId=OfficeLnFs -Dversion=1.0 -Dpackaging=jar
+mvn install:install-file -Dfile="%ETAX_HOME%\apps\project\lib\signjar\xerces.jar" -DgroupId=EmailerSafe -DartifactId=xerces -Dversion=1.0 -Dpackaging=jar
+mvn install:install-file -Dfile="%ETAX_HOME%\apps\project\lib\tm-extractors-0.3.jar" -DgroupId=tm-extractors -DartifactId=tm-extractors -Dversion=0.3 -Dpackaging=jar
+mvn install:install-file -Dfile="%ETAX_HOME%\apps\project\lib\snowball-1.0.jar" -DgroupId=lucene -DartifactId=snowball -Dversion=1.0 -Dpackaging=jar
+mvn install:install-file -Dfile="f:\JavaDoc\lucene\lucene-2.9.3\contrib\snowball\lucene-snowball-2.9.3.jar" -DgroupId=lucene -DartifactId=snowball -Dversion=2.9.3 -Dpackaging=jar
+mvn install:install-file -Dfile="%ETAX_HOME%\apps\project\lib\oscache-2.0.2-22Jan04.jar" -DgroupId=opensymphony -DartifactId=oscache -Dversion=2.0.2 -Dpackaging=jar
+mvn install:install-file -Dfile="%ETAX_HOME%\apps\project\lib\pjx.jar" -DgroupId=pjx -DartifactId=pjx -Dversion=1.0 -Dpackaging=jar
+mvn install:install-file -Dfile="%JBOSS_HOME%\server\default\lib\jboss-j2ee.jar" -DgroupId=jboss -DartifactId=jboss-j2ee -Dversion=4.0.2 -Dpackaging=jar
+mvn install:install-file -Dfile="%JBOSS_HOME%\server\default\lib\mail.jar" -DgroupId=jboss -DartifactId=mail -Dversion=4.0.2 -Dpackaging=jar
+mvn install:install-file -Dfile="%JBOSS_HOME%\server\default\lib\activation.jar" -DgroupId=jboss -DartifactId=activation -Dversion=4.0.2 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\JavaDoc\licence\1licence.jar -DgroupId=eTax -DartifactId=licence -Dversion=1.0 -Dpackaging=jar
+mvn install:install-file -Dfile="F:\JavaDoc\selectionService\9selectionService 1.02.jar" -DgroupId=uti.components -DartifactId=selectionService -Dversion=1.02 -Dpackaging=ejb
+mvn install:install-file -Dfile=F:\JavaDoc\ejb\ejb-2_1-api.jar -DgroupId=javax.ejb -DartifactId=ejb -Dversion=2.0 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\JavaDoc\hibernate\hibernate-3.1.2\hibernate-3.1.2.jar -DgroupId=org.hibernate -DartifactId=hibernate -Dversion=3.1.2 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\JavaDoc\hibernate\hibernate-3.1.3\hibernate-3.1.3.jar -DgroupId=org.hibernate -DartifactId=hibernate -Dversion=3.1.3 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\JavaDoc\jms\jms-1_1-fr-apidocs\lib\javax.jms.jar -DgroupId=javax.jms -DartifactId=jms -Dversion=1.1 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\JavaDoc\javamail\javamail-1_4-ea\mail.jar -DgroupId=javax.mail -DartifactId=mail -Dversion=1.4ea -Dpackaging=jar
+mvn install:install-file -Dfile=F:\JavaDoc\jaf\jaf-1_0_2-upd2\activation.jar -DgroupId=javax.activation -DartifactId=activation -Dversion=1.0.2 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\JavaDoc\test\testng-4.6.1\testng-4.6.1-jdk14.jar -DgroupId=org.testng -DartifactId=testng -Dversion=4.6.1 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\JavaDoc\PDF\itext-docs-1.4.2\itext-1.4.2.jar -DgroupId=itext -DartifactId=itext -Dversion=1.4.2 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\JavaDoc\PDF\PDFBox-0.7.1\lib\PDFBox-0.7.1.jar -DgroupId=pdfbox -DartifactId=pdfbox -Dversion=0.7.1 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\JavaDoc\PDF\itext-docs-1.4.2\etax.itext-1.4.2.jar -DgroupId=eTax -DartifactId=itext -Dversion=1.4.2 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\JavaDoc\PDF\PDFBox-0.7.2\lib\PDFBox-0.7.2.jar -DgroupId=pdfbox -DartifactId=pdfbox -Dversion=0.7.2 -Dpackaging=jar
+mvn install:install-file -Dfile=F:\JavaDoc\PDF\PDFBox-0.7.3-dev-20060725\lib\PDFBox-0.7.3-dev-20060725.jar -DgroupId=pdfbox -DartifactId=pdfbox -Dversion=0.7.3-dev-20060725 -Dpackaging=jar
+mvn install:install-file -Dfile=c:\Kits\LibsAndCode\csv.jar -DgroupId=csvreader -DartifactId=csvreader -Dversion=2.0 -Dpackaging=jar
+
+mvn install:install-file -Dfile=c:\jboss\client\jbossall-client.jar -DgroupId=jboss.rmi -DartifactId=jbossall-client -Dversion=1.0 -Dpackaging=jar
+mvn install:install-file -Dfile=c:\jboss\client\jbossall-client.jar -DgroupId=jboss.rmi -DartifactId=jboss-client -Dversion=1.0 -Dpackaging=jar
+mvn install:install-file -Dfile=c:\jboss\server\etax\lib\jboss.jar -DgroupId=jboss.j2ee -DartifactId=jboss -Dversion=1.0 -Dpackaging=jar
+mvn install:install-file -Dfile=c:\jboss\server\etax\lib\jboss.jar -DgroupId=jboss.j2ee -DartifactId=jnpserver -Dversion=1.0 -Dpackaging=jar
+mvn install:install-file -Dfile=c:\jboss\server\etax\lib\jboss.jar -DgroupId=jboss.j2ee -DartifactId=jboss-transaction -Dversion=1.0 -Dpackaging=jar
+mvn install:install-file -Dfile=c:\jboss\lib\jboss-common.jar -DgroupId=jboss.lib -DartifactId=jboss-common -Dversion=1.0 -Dpackaging=jar
+
+mvn install:install-file -Dfile="%JAVA_HOME%\jre\lib\plugin.jar" -DgroupId=java -DartifactId=plugin -Dversion=1.6.0 -Dpackaging=jar
+mvn install:install-file -Dfile="F:\JavaDoc\JGroups\JGroups-2.6.13.GA.bin\jgroups-all.jar" -DgroupId=jgroups -DartifactId=jgroups -Dversion=2.6.13.GA -Dpackaging=jar
