@@ -50,7 +50,7 @@ public class M3uFilesToPathCopy {
         System.out.println("sPathToCopyTo: " + sPathToCopyTo);
         pathToCopyTo = new File(sPathToCopyTo);
         if (!pathToCopyTo.exists()) {
-            System.out.println(pathToCopyTo.getCanonicalPath() + " se va creea !");
+            System.out.println(pathToCopyTo.getCanonicalPath() + " se va creea!");
         } else {
             System.out.println("pathToCopyTo: " + pathToCopyTo.getCanonicalPath());
         }
