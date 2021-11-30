@@ -21,6 +21,7 @@ import java.io.RandomAccessFile;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 /**
@@ -31,16 +32,36 @@ import java.util.*;
  * To change this template use File | Settings | File Templates.
  */
 public class M3uPlaylistSong implements Comparator<M3uPlaylistSong>, Comparable<M3uPlaylistSong> {
-    public static final String[] SUPPORTED_AUDIO_EXTENSIONS = new String[]{"mp3", "wma", "mp4",
-            "m4a", "3gp", "wav"};
+    public static final String[] SUPPORTED_AUDIO_EXTENSIONS = new String[] { "mp3", "wma", "mp4",
+            "m4a", "3gp", "wav" };
+    public static final int MAX_ABSOLUTE_SIZE_DEVIATION = 1024 * 100;
+    public static final int MAX_ABSOLUTE_SECONDS_DEVIATION = 5;
+    //    private static final String filePathSplitExp = "\\s|[!\"#$%&*\\-_=+,;:'\\.\\[\\]\\(\\){}]";
+    //    private static final String[] ignoreWords = {"all", "and", "cds", "ce", "cu", "de", "disc",
+    //            "do", "flac", "for", "in", "la", "mp3", "new", "of", "on", "or", "pe", "sa", "si", "the",
+    //            "top", "wav", "wma", "[various]"};
+    //    private static final String[] ignoreForPrefix = {"track"};
+    public static final float MAX_IN_MEMORY_SCORE_DEV = 0.7f;
+    public static final String[] TAGS_INCLUDED_IN_WORDS = { "album", "author", "comment", "mp3.id3tag.composer",
+            "mp3.id3tag.genre", "mp3.id3tag.orchestra", "mp3.id3tag.publisher", "title",
+            "jid3.Original artist(s)/performer(s)", "jid3.Involved people list",
+            "jid3.Original Lyricist(s)/text writer(s)", "jid3.Original album/movie/show title",
+            "jid3.Conductor/performer refinement", "jid3.Interpreted, remixed, or otherwise modified by",
+            "Lyricist/Text writer"
+    };
+    public static final String[] TAGS = { "album", "author", "bitrate", "comment", "date", "duration",
+            "mp3.frequency.hz", "mp3.id3tag.composer", "mp3.id3tag.encoded", "mp3.id3tag.genre",
+            "mp3.id3tag.orchestra", "mp3.id3tag.publisher", "mp3.id3tag.track", "mp3.length.bytes", "title",
+            "jid3.Original artist(s)/performer(s)", "jid3.Involved people list",
+            "jid3.Original Lyricist(s)/text writer(s)", "jid3.Original album/movie/show title",
+            "jid3.Conductor/performer refinement", "jid3.Interpreted, remixed, or otherwise modified by",
+            "Lyricist/Text writer",
+            "id3v1.album", "id3v1.author", "id3v1.title",
+            "id3v2.album", "id3v2.author", "id3v2.title"
+    };
     private static final int MAX_DUPLICATES_COUNT = 99;
-//    private static final int minLengthForAllowedNumbers = 3;
+    //    private static final int minLengthForAllowedNumbers = 3;
     private static final int maxFilePathFolderLevel = 0;
-//    private static final String filePathSplitExp = "\\s|[!\"#$%&*\\-_=+,;:'\\.\\[\\]\\(\\){}]";
-//    private static final String[] ignoreWords = {"all", "and", "cds", "ce", "cu", "de", "disc",
-//            "do", "flac", "for", "in", "la", "mp3", "new", "of", "on", "or", "pe", "sa", "si", "the",
-//            "top", "wav", "wma", "[various]"};
-//    private static final String[] ignoreForPrefix = {"track"};
     /**
      * linia cu #.
      */
@@ -53,11 +74,8 @@ public class M3uPlaylistSong implements Comparator<M3uPlaylistSong>, Comparable<
     private int seconds = -1;
     private M3uPlaylist m3uPlaylist;
     private int fileSize = -1;//length in bytes
-    private Map<String, Object> misc = new TreeMap<String, Object>();
-    private Map<String, String> tags = new TreeMap<String, String>();
-    public static final int MAX_ABSOLUTE_SIZE_DEVIATION = 1024 * 100;
-    public static final int MAX_ABSOLUTE_SECONDS_DEVIATION = 5;
-    public static final float MAX_IN_MEMORY_SCORE_DEV = 0.7f;
+    private final Map<String, Object> misc = new TreeMap<>();
+    private Map<String, String> tags = new TreeMap<>();
 
     public M3uPlaylistSong(String mp3FilePath) {
         this(mp3FilePath, null, null);
@@ -87,32 +105,6 @@ public class M3uPlaylistSong implements Comparator<M3uPlaylistSong>, Comparable<
         setMp3FilePath(mp3FilePath);
     }
 
-    public void setMp3Details(String mp3Details) {
-        if (mp3Details == null) {
-            return;
-        }
-        int idx = mp3Details.indexOf(',') + 1;
-        if (idx <= 0 || mp3Details.length() == idx) {
-            setRawMp3Details(mp3Details);
-            return;
-        }
-        try {
-            seconds = Integer.parseInt(mp3Details.substring(
-                    M3uPlaylist.detailsHeaderPrefix.length(), idx - 1));
-        } catch (Exception e) {
-            seconds = 0;
-        }
-        setRawMp3Details(mp3Details.substring(idx));
-    }
-
-    public void setRawMp3Details(String rawMp3Details) {
-        if (rawMp3Details == null) {
-            return;
-        }
-        this.rawMp3Details = rawMp3Details;
-        appendSplits(rawMp3Details, this.mp3Details);
-    }
-
     private void appendSplits(String text, List<String> splitsList) {
         text = text.trim().toLowerCase();
         List<String> splits = Util.prepareForLucene(text);
@@ -126,21 +118,21 @@ public class M3uPlaylistSong implements Comparator<M3uPlaylistSong>, Comparable<
         }
     }
 
-//    private boolean isAllowedNumber(String s) {
-//        if (s.length() >= minLengthForAllowedNumbers) {
-//            return true;
-//        }
-//        return !s.matches("\\d++");
-//    }
+    //    private boolean isAllowedNumber(String s) {
+    //        if (s.length() >= minLengthForAllowedNumbers) {
+    //            return true;
+    //        }
+    //        return !s.matches("\\d++");
+    //    }
 
-//    private boolean startsWithBadPrefix(String s) {
-//        for (String prefix : ignoreForPrefix) {
-//            if (s.startsWith(prefix)) {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
+    //    private boolean startsWithBadPrefix(String s) {
+    //        for (String prefix : ignoreForPrefix) {
+    //            if (s.startsWith(prefix)) {
+    //                return true;
+    //            }
+    //        }
+    //        return false;
+    //    }
 
     public List<String> getMp3FilePathPartsTokenized() {
         File mp3FilePathFile = new File(mp3FilePath);
@@ -166,7 +158,7 @@ public class M3uPlaylistSong implements Comparator<M3uPlaylistSong>, Comparable<
      * @return
      */
     public Collection<String> getWords() {
-//        Set<String> words = new TreeSet<String>(mp3Details);
+        //        Set<String> words = new TreeSet<String>(mp3Details);
         List<String> words;
         if (tags.isEmpty()) {
             words = new ArrayList<String>(mp3Details);
@@ -184,25 +176,6 @@ public class M3uPlaylistSong implements Comparator<M3uPlaylistSong>, Comparable<
         return words;
     }
 
-    public static final String[] TAGS_INCLUDED_IN_WORDS = {"album", "author", "comment", "mp3.id3tag.composer",
-            "mp3.id3tag.genre", "mp3.id3tag.orchestra", "mp3.id3tag.publisher", "title",
-            "jid3.Original artist(s)/performer(s)", "jid3.Involved people list",
-            "jid3.Original Lyricist(s)/text writer(s)", "jid3.Original album/movie/show title",
-            "jid3.Conductor/performer refinement", "jid3.Interpreted, remixed, or otherwise modified by",
-            "Lyricist/Text writer"
-    };
-
-    public static final String[] TAGS = {"album", "author", "bitrate", "comment", "date", "duration",
-            "mp3.frequency.hz", "mp3.id3tag.composer", "mp3.id3tag.encoded", "mp3.id3tag.genre",
-            "mp3.id3tag.orchestra", "mp3.id3tag.publisher", "mp3.id3tag.track", "mp3.length.bytes", "title",
-            "jid3.Original artist(s)/performer(s)", "jid3.Involved people list",
-            "jid3.Original Lyricist(s)/text writer(s)", "jid3.Original album/movie/show title",
-            "jid3.Conductor/performer refinement", "jid3.Interpreted, remixed, or otherwise modified by",
-            "Lyricist/Text writer",
-            "id3v1.album", "id3v1.author", "id3v1.title",
-            "id3v2.album", "id3v2.author", "id3v2.title"
-    };
-
     public Collection<String> getUniqueWords() {
         Collection<String> words = getWords();
         Collection<String> uniqueWords = new TreeSet<String>();
@@ -216,12 +189,38 @@ public class M3uPlaylistSong implements Comparator<M3uPlaylistSong>, Comparable<
         return rawMp3Details;
     }
 
+    public void setRawMp3Details(String rawMp3Details) {
+        if (rawMp3Details == null) {
+            return;
+        }
+        this.rawMp3Details = rawMp3Details;
+        appendSplits(rawMp3Details, this.mp3Details);
+    }
+
     public String getMp3FilePathFull() {
         return mp3FilePathFull;
     }
 
     public List<String> getMp3Details() {
         return mp3Details;
+    }
+
+    public void setMp3Details(String mp3Details) {
+        if (mp3Details == null) {
+            return;
+        }
+        int idx = mp3Details.indexOf(',') + 1;
+        if (idx <= 0 || mp3Details.length() == idx) {
+            setRawMp3Details(mp3Details);
+            return;
+        }
+        try {
+            seconds = Integer.parseInt(mp3Details.substring(
+                    M3uPlaylist.detailsHeaderPrefix.length(), idx - 1));
+        } catch (Exception e) {
+            seconds = 0;
+        }
+        setRawMp3Details(mp3Details.substring(idx));
     }
 
     public void setMp3Details(List<String> mp3Details) {
@@ -242,7 +241,7 @@ public class M3uPlaylistSong implements Comparator<M3uPlaylistSong>, Comparable<
         try {
             URL url = new URL(deviceSongPath);
             deviceSongPath = url.getQuery();
-            deviceSongPath = URLDecoder.decode(deviceSongPath, "utf-8");
+            deviceSongPath = URLDecoder.decode(deviceSongPath, StandardCharsets.UTF_8);
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println(deviceSongPath);
@@ -273,21 +272,24 @@ public class M3uPlaylistSong implements Comparator<M3uPlaylistSong>, Comparable<
         }
     }
 
-    public void setMp3FilePath(String mp3FilePath) {
-        this.mp3FilePath = mp3FilePath;
-        this.mp3FileName = null;
-        this.mp3FileExtension = null;
-        this.mp3FilePathFull = null;
-        if (this.mp3FilePath != null) {
-            this.mp3FileName = Util.computeFileName(this.mp3FilePath);
-            this.mp3FileExtension = Util.computeFileExtension(mp3FileName);
-            this.mp3FilePathFull = computeMp3FilePathFull(this.mp3FilePath, this.m3uPlaylist);
-        }
-    }
-
     public void fillWithTags() {
         fillWithTagsJavaZoom();
         fillWithTagsJid3();
+        updateSecondsFromTags();
+        updateFileSizeFromTags();
+    }
+
+    private void updateSecondsFromTags() {
+        if (seconds < 0 && tags.get("duration") != null) {
+            try {
+                seconds = (int) (Long.parseLong(tags.get("duration")) / 1000);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void updateFileSizeFromTags() {
         if (fileSize < 0 && tags.get("mp3.length.bytes") != null) {
             try {
                 fileSize = Integer.parseInt(tags.get("mp3.length.bytes"));
@@ -346,20 +348,20 @@ public class M3uPlaylistSong implements Comparator<M3uPlaylistSong>, Comparable<
             baseFormat = baseFileFormat.getFormat();
             // TAudioFileFormat properties
             if (baseFileFormat instanceof TAudioFileFormat) {
-                Map properties = ((TAudioFileFormat) baseFileFormat).properties();
-//                tags.putAll(properties);
+                Map<String, Object> properties = baseFileFormat.properties();
+                //                tags.putAll(properties);
                 putTags(properties);
             }
             // TAudioFormat properties
             if (baseFormat instanceof TAudioFormat) {
-                Map properties = ((TAudioFormat) baseFormat).properties();
-//                tags.putAll(properties);
+                Map<String, Object> properties = baseFormat.properties();
+                //                tags.putAll(properties);
                 putTags(properties);
             }
             return true;
         } catch (Exception e) {
-//            e.printStackTrace();
-//            System.out.println("ERR (JavaZoom) reading tags for: " + mp3FilePathFull);
+            //            e.printStackTrace();
+            //            System.out.println("ERR (JavaZoom) reading tags for: " + mp3FilePathFull);
         }
         return false;
     }
@@ -383,7 +385,7 @@ public class M3uPlaylistSong implements Comparator<M3uPlaylistSong>, Comparable<
                     putTag("mp3.id3tag.track", id3v1.getTrackNumberOnAlbum(), false);
                 }
                 putTag("mp3.id3tag.genre", (String)
-                        TagConstant.genreIdToString.get(new Long(id3v1.getSongGenre())), false);
+                        TagConstant.genreIdToString.get(Long.valueOf(id3v1.getSongGenre())), false);
             }
             if (!mp3File.hasID3v2Tag()) {
                 return true;
@@ -393,13 +395,13 @@ public class M3uPlaylistSong implements Comparator<M3uPlaylistSong>, Comparable<
             AbstractID3v2Frame v2Frame;
             String identifier;
             String frameDescr = null, frameText;
-            for (Iterator it1 = id3v2.getFrameIterator(); it1.hasNext();) {
+            for (Iterator it1 = id3v2.getFrameIterator(); it1.hasNext(); ) {
                 v2Frame = (AbstractID3v2Frame) it1.next();
                 identifier = v2Frame.getIdentifier();
                 if (identifier.length() > 4) {
                     identifier = v2Frame.getIdentifier().substring(0, 4);
                 } else if (identifier.length() < 4) {
-//                    System.out.println("identifier = " + identifier);
+                    //                    System.out.println("identifier = " + identifier);
                 }
                 if (v2Frame instanceof ID3v2_4Frame) {
                     frameDescr = (String) TagConstant.id3v2_4FrameIdToString.get(identifier);
@@ -459,9 +461,6 @@ public class M3uPlaylistSong implements Comparator<M3uPlaylistSong>, Comparable<
             }
 
             return true;
-        } catch (TagException e) {
-            e.printStackTrace();
-            System.out.println("ERR (jid3) reading tags for: " + mp3FilePathFull);
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("ERR (jid3) reading tags for: " + mp3FilePathFull);
@@ -485,7 +484,7 @@ public class M3uPlaylistSong implements Comparator<M3uPlaylistSong>, Comparable<
         try {
             return new MP3File(mp3FilePathFull);
         } catch (Exception e) {
-//            e.printStackTrace();
+            //            e.printStackTrace();
         }
         MP3File mp3File = new MP3File();
         mp3File.setMp3file(new File(file));
@@ -516,9 +515,9 @@ public class M3uPlaylistSong implements Comparator<M3uPlaylistSong>, Comparable<
             } catch (TagNotFoundException ex) {
                 // maybe a different version
             } catch (UnsupportedOperationException uoe) {
-//                ex.printStackTrace();
+                //                ex.printStackTrace();
             } catch (Exception ex) {
-//                ex.printStackTrace();
+                //                ex.printStackTrace();
             }
             try {
                 if (!mp3File.hasID3v2Tag()) {
@@ -549,7 +548,7 @@ public class M3uPlaylistSong implements Comparator<M3uPlaylistSong>, Comparable<
         try {
             mp3File.setFilenameTag(FilenameTagBuilder.createFilenameTagFromMP3File(mp3File));
         } catch (Exception ex) {
-//            ex.printStackTrace();
+            //            ex.printStackTrace();
             System.out.println("ERR createFileNameTagFromMP3File:\n" + file);
         }
         return mp3File;
@@ -617,7 +616,7 @@ public class M3uPlaylistSong implements Comparator<M3uPlaylistSong>, Comparable<
     public boolean updateAlbumArtist(boolean overwrite) {
         try {
             org.farng.mp3.MP3File mp3File = constructJid3MP3File(mp3FilePathFull);
-//            ID3v1 id3v1 = mp3File.getID3v1Tag();
+            //            ID3v1 id3v1 = mp3File.getID3v1Tag();
             AbstractID3v2 id3v2;
             if (mp3File.hasID3v2Tag()) {
                 id3v2 = mp3File.getID3v2Tag();
@@ -649,8 +648,8 @@ public class M3uPlaylistSong implements Comparator<M3uPlaylistSong>, Comparable<
             Long encodingCode = (Long) objectNumberHashMap.getValue();
             String encoding = (String) objectNumberHashMap.getIdToString().get(encodingCode);
             ObjectStringSizeTerminated objectStringHashMap = (ObjectStringSizeTerminated) it1.next();
-//            String orchestra = new String(objectStringHashMap.writeByteArray(), encoding);
-//            System.out.println("Band/orchestra/accompaniment: " + orchestra);
+            //            String orchestra = new String(objectStringHashMap.writeByteArray(), encoding);
+            //            System.out.println("Band/orchestra/accompaniment: " + orchestra);
             objectStringHashMap.readByteArray(tags.get("mp3.id3tag.orchestra").getBytes(encoding));
 
             if (overwrite) {
@@ -686,13 +685,25 @@ public class M3uPlaylistSong implements Comparator<M3uPlaylistSong>, Comparable<
         return mp3FilePath;
     }
 
+    public void setMp3FilePath(String mp3FilePath) {
+        this.mp3FilePath = mp3FilePath;
+        this.mp3FileName = null;
+        this.mp3FileExtension = null;
+        this.mp3FilePathFull = null;
+        if (this.mp3FilePath != null) {
+            this.mp3FileName = Util.computeFileName(this.mp3FilePath);
+            this.mp3FileExtension = Util.computeFileExtension(mp3FileName);
+            this.mp3FilePathFull = computeMp3FilePathFull(this.mp3FilePath, this.m3uPlaylist);
+        }
+    }
+
     @Override
     public String toString() {
         return toString(false, false, false, null);
     }
 
     public String toString(boolean showDetails, boolean showFilePath,
-                           boolean showMp3FilePathParts, String[] miscToShow) {
+            boolean showMp3FilePathParts, String[] miscToShow) {
         StringBuilder sb = new StringBuilder();
         if (this.getM3uPlaylist().getLoadedFromDevice()) {
             sb.append("My Computer\\WALKMAN\\Storage Media\\MUSIC\\");
@@ -748,7 +759,7 @@ public class M3uPlaylistSong implements Comparator<M3uPlaylistSong>, Comparable<
     }
 
     public M3uPlaylist getDupPlayList(String duplicatesBasePath, float maxScoreDeviationPercentAgainstMatch,
-                                      boolean dontReturnForOverMaxScoreDeviation, boolean foundSongCanMiss) {
+            boolean dontReturnForOverMaxScoreDeviation, boolean foundSongCanMiss) {
         MusicIndexSearcher searcher = new MusicIndexSearcher();
         // In functie de deviatie, duplicatele gasite pot fi realmente sau nu duplicate !
         // E preferabil ca deviatia acceptata sa fie cat mai mica.
@@ -785,7 +796,7 @@ public class M3uPlaylistSong implements Comparator<M3uPlaylistSong>, Comparable<
     }
 
     public M3uPlaylistSong getPerfectMatchSong(List<M3uPlaylistSong> resultSongs,
-                                               MusicIndexSearcher searcher) {
+            MusicIndexSearcher searcher) {
         if (this.getM3uPlaylist().getLoadedFromDevice()) {
             return resultSongs.get(0);
         }
@@ -826,11 +837,7 @@ public class M3uPlaylistSong implements Comparator<M3uPlaylistSong>, Comparable<
         Float copy = Float.parseFloat((String) songsInFoundMem.get(1).getMisc("score"));
         float inMemScoreDev = (original - copy) / original;
         songsInFoundMem.get(0).putMisc("inMemScoreDev", String.valueOf(inMemScoreDev));
-        if (inMemScoreDev <= MAX_IN_MEMORY_SCORE_DEV) {
-            return true;
-        } else {
-            return false;
-        }
+        return inMemScoreDev <= MAX_IN_MEMORY_SCORE_DEV;
     }
 
     private String computePlayListWithDupPath(String duplicatesBasePath) {
@@ -858,11 +865,11 @@ public class M3uPlaylistSong implements Comparator<M3uPlaylistSong>, Comparable<
         String mp3FileFullPath = getMp3FilePathFull();
         File file = new File(mp3FileFullPath);
         this.fileSize = (int) file.length();
-//        if (mp3FilePath.indexOf("Black Eyed Peas - Don't Phunk With My Heart") >= 0 ||
-//                mp3FilePath.indexOf("08.If I Can't.mp3") >= 0) {
-//            System.out.println("load mp3FilePath = " + mp3FilePath + " fileSize = " + fileSize);
-//        }
-//        System.out.println("load mp3FilePath = " + mp3FilePath + " fileSize = " + fileSize);
+        //        if (mp3FilePath.indexOf("Black Eyed Peas - Don't Phunk With My Heart") >= 0 ||
+        //                mp3FilePath.indexOf("08.If I Can't.mp3") >= 0) {
+        //            System.out.println("load mp3FilePath = " + mp3FilePath + " fileSize = " + fileSize);
+        //        }
+        //        System.out.println("load mp3FilePath = " + mp3FilePath + " fileSize = " + fileSize);
         if (this.fileSize == 0) {
             if (file.exists()) {
                 // probabil este un fisier generat de torrent dar care inca nu s-a downloadat
@@ -880,6 +887,10 @@ public class M3uPlaylistSong implements Comparator<M3uPlaylistSong>, Comparable<
         return fileSize;
     }
 
+    public void setFileSize(int fileSize) {
+        this.fileSize = fileSize;
+    }
+
     public Object putMisc(String key, Object value) {
         return misc.put(key, value);
     }
@@ -890,10 +901,6 @@ public class M3uPlaylistSong implements Comparator<M3uPlaylistSong>, Comparable<
 
     public Map<String, Object> getMisc() {
         return misc;
-    }
-
-    public void setFileSize(int fileSize) {
-        this.fileSize = fileSize;
     }
 
     public boolean exists() {
@@ -962,6 +969,10 @@ public class M3uPlaylistSong implements Comparator<M3uPlaylistSong>, Comparable<
         return tags;
     }
 
+    public void setTags(Map<String, String> tags) {
+        this.tags = tags;
+    }
+
     public void putTag(String key, String value, boolean overwrite) {
         if (value == null) {
             if (overwrite) {
@@ -990,10 +1001,6 @@ public class M3uPlaylistSong implements Comparator<M3uPlaylistSong>, Comparable<
             }
             putTag(tag, value == null ? null : value.toString(), false);
         }
-    }
-
-    public void setTags(Map<String, String> tags) {
-        this.tags = tags;
     }
 
     public boolean isExtractedFromDevice() {

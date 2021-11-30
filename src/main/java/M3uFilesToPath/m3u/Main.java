@@ -22,63 +22,63 @@ import static M3uFilesToPath.lucene.MusicIndex.ymd;
 public class Main {
     public static final boolean WARN_ABOUT_DIFF_FOLDERS = false;
 
-//    public static final String M3UFile = "D:\\MUZICA\\2011-03-01 JOB d-muzica.m3u8";
-//    public static final String duplicatesList = "D:\\MUZICA\\Temp\\" + ymd +
-//            " duplicated songs\\" + ymd + " duplicated songs.m3u8";
-//    public static final String originalList = "D:\\MUZICA\\Temp\\" + ymd +
-//            " duplicated songs\\" + ymd + " original songs.m3u8";
-//    public static final String MyPlaylistsPath = "c:\\Users\\adr\\Music\\Playlists\\";
-//    public static final String ARCHIVE_DIR = "d:\\Projects\\Archives\\";
-//    public static final String CURRENT_ARCHIVE_DIR = ARCHIVE_DIR + "M3uFilesToPath home 2011-03-05\\";
+    //    public static final String M3UFile = "D:\\MUZICA\\2011-03-01 JOB d-muzica.m3u8";
+    //    public static final String duplicatesList = "D:\\MUZICA\\Temp\\" + ymd +
+    //            " duplicated songs\\" + ymd + " duplicated songs.m3u8";
+    //    public static final String originalList = "D:\\MUZICA\\Temp\\" + ymd +
+    //            " duplicated songs\\" + ymd + " original songs.m3u8";
+    //    public static final String MyPlaylistsPath = "c:\\Users\\adr\\Music\\Playlists\\";
+    //    public static final String ARCHIVE_DIR = "d:\\Projects\\Archives\\";
+    //    public static final String CURRENT_ARCHIVE_DIR = ARCHIVE_DIR + "M3uFilesToPath home 2011-03-05\\";
 
-    public static final String M3UFile = "F:\\MUZICA\\2012-05-10 home all.m3u8";
-    public static final String duplicatesList = "F:\\Temp\\Muzica\\" + ymd +
-        " duplicated songs\\" + ymd + " duplicated songs.m3u8";
-    public static final String originalList = "F:\\Temp\\Muzica\\" + ymd +
-        " duplicated songs\\" + ymd + " original songs.m3u8";
-    public static final String MyPlaylistsPath =
-        "C:\\Documents and Settings\\adrr\\My Documents\\My Music\\My Playlists\\";
-    //    public static final String MyPlaylistsPath = "F:\\MUZICA\\Sony MP3 playlists\\2012-01-12\\";
-    public static final String ARCHIVE_DIR = "F:\\Temp\\Muzica\\Archives\\";
-    public static final String CURRENT_ARCHIVE_DIR = ARCHIVE_DIR + "M3uFilesToPath home 2011-03-07\\";
+    public static final String MyPlaylistsPath = "C:\\Users\\adpetre\\Music\\Playlists\\";
+    public static final String MUSIC_TEMP_DIR = "C:\\Users\\adpetre\\Temp\\Muzica\\";
+    public static final String M3UFile = MyPlaylistsPath + "MUZICA.m3u8";
+    public static final String duplicatesList = MUSIC_TEMP_DIR + ymd +
+            " duplicated songs\\" + ymd + " duplicated songs.m3u8";
+    public static final String originalList = MUSIC_TEMP_DIR + ymd +
+            " duplicated songs\\" + ymd + " original songs.m3u8";
+    public static final String ARCHIVE_DIR = MUSIC_TEMP_DIR + "Archives\\";
+    public static final String CURRENT_ARCHIVE_DIR = ARCHIVE_DIR + "M3uFilesToPath home 2021-11-30\\";
 
     public static void main(String[] args) throws Exception {
         System.out.println("BEGIN main");
-//        BooleanQuery.setMaxClauseCount(M3uPlaylistSong.MAX_ABSOLUTE_SIZE_DEVIATION * 2 + 1);
+        //        BooleanQuery.setMaxClauseCount(M3uPlaylistSong.MAX_ABSOLUTE_SIZE_DEVIATION * 2 + 1);
 
-//        MusicIndex.INDEX_DIR = new File("..\\MusicIndex\\MusicIndex home 2011-02-27");
-//        MusicIndex.INDEX_DIR = new File("..\\MusicIndex\\MusicIndex job " + ymd);
-//        MusicIndex.INDEX_DIR = new File("..\\MusicIndex\\MusicIndex home " + ymd);
-        MusicIndex.INDEX_DIR = new File("..\\MusicIndex\\MusicIndex home 2012-05-10");
-//        MusicIndex.INDEX_DIR = new File(CURRENT_ARCHIVE_DIR + "MusicIndex home 2011-03-07");
+        //        MusicIndex.INDEX_DIR = new File("..\\MusicIndex\\MusicIndex home 2011-02-27");
+        //        MusicIndex.INDEX_DIR = new File("..\\MusicIndex\\MusicIndex job " + ymd);
+        //        MusicIndex.INDEX_DIR = new File("..\\MusicIndex\\MusicIndex home " + ymd);
+        //        MusicIndex.INDEX_DIR = new File("..\\MusicIndex\\MusicIndex home 2012-05-10");
+        MusicIndex.INDEX_DIR = new File("..\\MusicIndex\\MusicIndex home " + ymd);
+        //        MusicIndex.INDEX_DIR = new File(CURRENT_ARCHIVE_DIR + "MusicIndex home 2011-03-07");
 
-//        saveFullPathInPlayList(MyPlaylistsPath + "2010-03-04 selected teac.m3u8",
-//                               getFullPathPlayListNameFor(MyPlaylistsPath +
-//                                       "2010-03-04 selected teac.m3u8"), true);
-//        saveFullPathInPlayList(M3UFile, getFullPathPlayListNameFor(M3UFile), true);
-//        saveFullPathInPlayList("F:\\MUZICA\\2011-03-02 all pmp.m3u8",
-//                               getFullPathPlayListNameFor("F:\\MUZICA\\2011-03-02 all pmp.m3u8"), true);
-//        saveFullPathInPlayList("F:\\MUZICA\\2011-03-05 home f-muzica.m3u8",
-//                               getFullPathPlayListNameFor("F:\\MUZICA\\2011-03-05 home f-muzica.m3u8"), true);
-//        saveFullPathInPlayList("F:\\MUZICA\\2012-05-10 home all.m3u8",
-//                               getFullPathPlayListNameFor("F:\\MUZICA\\2012-05-10 home all.m3u8"), true);
+        //        saveFullPathInPlayList(MyPlaylistsPath + "2010-03-04 selected teac.m3u8",
+        //                               getFullPathPlayListNameFor(MyPlaylistsPath +
+        //                                       "2010-03-04 selected teac.m3u8"), true);
+        //        saveFullPathInPlayList(M3UFile, getFullPathPlayListNameFor(M3UFile), true);
+        //        saveFullPathInPlayList("F:\\MUZICA\\2011-03-02 all pmp.m3u8",
+        //                               getFullPathPlayListNameFor("F:\\MUZICA\\2011-03-02 all pmp.m3u8"), true);
+        //        saveFullPathInPlayList("F:\\MUZICA\\2011-03-05 home f-muzica.m3u8",
+        //                               getFullPathPlayListNameFor("F:\\MUZICA\\2011-03-05 home f-muzica.m3u8"), true);
+        //        saveFullPathInPlayList("F:\\MUZICA\\2012-05-10 home all.m3u8",
+        //                               getFullPathPlayListNameFor("F:\\MUZICA\\2012-05-10 home all.m3u8"), true);
 
         // indexare play-list
-//        M3uPlaylist m3uPlaylist = new M3uPlaylist(M3UFile, true);
-//        m3uPlaylist.setDontThrowErrForMissingFilesWhenComputingSize(false);
-//        m3uPlaylist.setDontComputeFileSizeIfExistsSeconds(false);
-//        m3uPlaylist.setDontReadTags(false);
-//        m3uPlaylist.index(true);
+        M3uPlaylist m3uPlaylist = new M3uPlaylist(M3UFile, true);
+        m3uPlaylist.setDontThrowErrForMissingFilesWhenComputingSize(false);
+        m3uPlaylist.setDontComputeFileSizeIfExistsSeconds(false);
+        m3uPlaylist.setDontReadTags(false);
+        m3uPlaylist.index(true);
 
-//        showDiffOrchestra(m3uPlaylist, true);
+        //        showDiffOrchestra(m3uPlaylist, true);
 
-//        convertPlayList("D:\\MUZICA\\2011-03-01 JOB d-muzica.m3u8", true, null, true, 0.1f, false);
-//        convertPlayList("F:\\MUZICA\\cd-14-02-2009.m3u", true, null, true, 5f, false);
-//        convertPlayList("F:\\MUZICA\\Sony MP3 playlists\\2012-01-12\\" +
-//                            "Understanding the Universe Introduction to Astronomy - Alex Filippenko.m3u",
-//                        false, null, true, 5f, false);
-//        convertPlayList("F:\\MUZICA\\Sony MP3 playlists\\2012-01-12\\STALKER.m3u",
-//                        false, null, true, 5f, false);
+        //        convertPlayList("D:\\MUZICA\\2011-03-01 JOB d-muzica.m3u8", true, null, true, 0.1f, false);
+        //        convertPlayList("F:\\MUZICA\\cd-14-02-2009.m3u", true, null, true, 5f, false);
+        //        convertPlayList("F:\\MUZICA\\Sony MP3 playlists\\2012-01-12\\" +
+        //                            "Understanding the Universe Introduction to Astronomy - Alex Filippenko.m3u",
+        //                        false, null, true, 5f, false);
+        //        convertPlayList("F:\\MUZICA\\Sony MP3 playlists\\2012-01-12\\STALKER.m3u",
+        //                        false, null, true, 5f, false);
 //        saveNewSongsList("D:\\MUZICA\\2011-02-09 job NewMuzic selection.m3u8", false);
 
 //        convertPlayLists(
