@@ -40,7 +40,7 @@ public class M3uPlaylistSong implements Comparator<M3uPlaylistSong>, Comparable<
 	//            "do", "flac", "for", "in", "la", "mp3", "new", "of", "on", "or", "pe", "sa", "si", "the",
 	//            "top", "wav", "wma", "[various]"};
 	//    private static final String[] ignoreForPrefix = {"track"};
-	public static final float MAX_IN_MEMORY_SCORE_DEV = 0.9f;
+	public static final float MAX_IN_MEMORY_SCORE_DEV = 0.952f;
 	public static final String[] TAGS_INCLUDED_IN_WORDS = { "album", "author", "comment", "mp3.id3tag.composer",
 			"mp3.id3tag.genre", "mp3.id3tag.orchestra", "mp3.id3tag.publisher", "title",
 			"jid3.Original artist(s)/performer(s)", "jid3.Involved people list",
@@ -228,6 +228,10 @@ public class M3uPlaylistSong implements Comparator<M3uPlaylistSong>, Comparable<
 
 	public void setMp3FileName(String mp3FileName) {
 		this.mp3FileName = mp3FileName;
+	}
+
+	public String getMp3FileNameWithoutExtension() {
+		return mp3FileExtension == null ? mp3FileName : mp3FileName.substring(0, mp3FileName.lastIndexOf('.'));
 	}
 
 	public void setDeviceSongPath(String deviceSongPath) {
@@ -855,7 +859,7 @@ public class M3uPlaylistSong implements Comparator<M3uPlaylistSong>, Comparable<
 		return playListWithDupPath;
 	}
 
-	private StringBuilder appendToStringBuilder(List<String> strings, StringBuilder sb) {
+	private void appendToStringBuilder(List<String> strings, StringBuilder sb) {
 		boolean isFirst = true;
 		for (String s : strings) {
 			if (!isFirst) {
@@ -865,7 +869,6 @@ public class M3uPlaylistSong implements Comparator<M3uPlaylistSong>, Comparable<
 			}
 			sb.append(s);
 		}
-		return sb;
 	}
 
 	public void computeFileSize() {
