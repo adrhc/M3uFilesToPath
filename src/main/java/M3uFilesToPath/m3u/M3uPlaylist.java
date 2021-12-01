@@ -131,7 +131,7 @@ public class M3uPlaylist {
 
 	public void addSongs(Collection<M3uPlaylistSong> newSongs, SongFilter songFilter) {
 		for (M3uPlaylistSong song : newSongs) {
-			if (songFilter != null && !songFilter.accept(song)) {
+			if (songFilter != null && songFilter.accept(song)) {
 				continue;
 			}
 			addSong(song);
@@ -158,7 +158,7 @@ public class M3uPlaylist {
 		int countFoundInIndexButDiff = 0, countFoundAndEq = 0;
 		DecimalFormat df = new DecimalFormat("#,###,##0.00000");
 		for (M3uPlaylistSong foundSong : this.getSongs()) {
-			if (foundSongFilter != null && !foundSongFilter.accept(foundSong)) {
+			if (foundSongFilter != null && foundSongFilter.accept(foundSong)) {
 				continue;
 			}
 			misc = foundSong.getMisc();
@@ -358,7 +358,7 @@ public class M3uPlaylist {
 			//            }
 			writer.println(mp3FirstLine);
 			for (M3uPlaylistSong song : songs) {
-				if (songFilter != null && !songFilter.accept(song)) {
+				if (songFilter != null && songFilter.accept(song)) {
 					continue;
 				}
 				writer.print(detailsHeaderPrefix);
@@ -429,7 +429,7 @@ public class M3uPlaylist {
 			List<M3uPlaylistSong> songsToRemove = new ArrayList<M3uPlaylistSong>();
 			if (songFilter != null) {
 				for (M3uPlaylistSong song1 : songs) {
-					if (!songFilter.accept(song1)) {
+					if (songFilter.accept(song1)) {
 						songsToRemove.add(song1);
 					}
 				}

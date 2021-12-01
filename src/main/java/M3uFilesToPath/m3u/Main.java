@@ -350,7 +350,7 @@ public class Main {
         for (M3uPlaylist m3uPlaylistDup : duplicatesPlayLists) {
             m3uPlaylistWithOriginalSongs.addSongs(m3uPlaylistDup.getSongs(), new SongFilter() {
                 public boolean accept(M3uPlaylistSong song) {
-                    return !m3uPlaylistWithDupSongs.getSongs().contains(song);
+                    return m3uPlaylistWithDupSongs.getSongs().contains(song);
                 }
             });
             searchedSong = (M3uPlaylistSong) m3uPlaylistDup.getSongs().get(0).getMisc("searchedSong");
@@ -407,7 +407,7 @@ public class Main {
         }
         m3uPlaylistWithDupSongs.addSongs(m3uPlaylistDup.getSongs(), new SongFilter() {
             public boolean accept(M3uPlaylistSong song) {
-                return !isExceptionFromRemoval(song) && (songToKeep == null || song != songToKeep);
+                return isExceptionFromRemoval(song) || (songToKeep != null && song == songToKeep);
             }
         });
         assert TO_DELETE_EXCEPTED_SONG.length != 0 || m3uPlaylistWithDupSongs.getSongs()
@@ -496,7 +496,7 @@ public class Main {
         M3uPlaylist newSongs = new M3uPlaylist(foundSongs.getM3uFilePath(), true);
         newSongs.addSongs(foundSongs.getSongs(), new SongFilter() {
             public boolean accept(M3uPlaylistSong song) {
-                return song.getMisc().get("keep") == null;
+                return song.getMisc().get("keep") != null;
             }
         });
 
@@ -625,7 +625,7 @@ public class Main {
             m3uPlaylistEXTERN.setWriteFullMp3PathToM3u(true);
             m3uPlaylistEXTERN.write(new SongFilter() {
                 public boolean accept(M3uPlaylistSong song) {
-                    return song.exists();
+                    return !song.exists();
                 }
             });
         }

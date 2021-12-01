@@ -17,7 +17,6 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
 
-import static M3uFilesToPath.lucene.MusicIndex.ymd;
 import static M3uFilesToPath.m3u.Main.CURRENT_ARCHIVE_DIR;
 
 /**
@@ -184,13 +183,14 @@ public class M3uTests {
         M3uPlaylist m3uPlaylist = new M3uPlaylist(filesFromDevicePlayList);
         m3uPlaylist.loadWinampDevicePlayList(new SongFilter() {
             public boolean accept(M3uPlaylistSong song) {
-                String[] avoid = new String[]{"CAMP Hot Topics", "PMP Exam Prep", "PMBOK", "Rita Mulcahy", "Crosswind"};
+                String[] avoid = new String[] { "CAMP Hot Topics", "PMP Exam Prep", "PMBOK", "Rita Mulcahy",
+                        "Crosswind" };
                 for (String void1 : avoid) {
-                    if (song.getMp3FilePath().indexOf(void1) >= 0) {
-                        return false;
+                    if (song.getMp3FilePath().contains(void1)) {
+                        return true;
                     }
                 }
-                return true;
+                return false;
             }
         });
         return m3uPlaylist;
