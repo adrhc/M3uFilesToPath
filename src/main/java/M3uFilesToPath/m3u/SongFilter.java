@@ -8,5 +8,5 @@ package M3uFilesToPath.m3u;
  * To change this template use File | Settings | File Templates.
  */
 public interface SongFilter {
-    public boolean accept(M3uPlaylistSong song);
+	boolean accept(M3uPlaylistSong song);
 }

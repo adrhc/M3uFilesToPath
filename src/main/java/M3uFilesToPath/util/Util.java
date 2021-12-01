@@ -1,9 +1,12 @@
 package M3uFilesToPath.util;
 
-import M3uFilesToPath.lucene.MusicIndex;
 import M3uFilesToPath.m3u.M3uPlaylist;
+import org.apache.lucene.analysis.standard.StandardTokenizer;
+import org.apache.lucene.analysis.tokenattributes.TermAttribute;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.StringReader;
 import java.text.Normalizer;
 import java.util.*;
 
@@ -46,12 +49,26 @@ public class Util {
     public static List<String> prepareForLucene(String string) {
         // pt a-l tokeniza cat mai in acord cu indexul este necesar sa se aplice removeAccents
         string = Util.removeAccents(string);
-        List<String> luceneTokens = MusicIndex.tokenize(string);
+        List<String> luceneTokens = tokenize(string);
         List<String> rez = new ArrayList<String>();
         for (String token : luceneTokens) {
             rez.addAll(Arrays.asList(token.split(notTokenizedByLucene)));
         }
         return rez;
+    }
+
+    public static List<String> tokenize(String string) {
+        List<String> list = new ArrayList<String>();
+        StandardTokenizer tokenizer = new StandardTokenizer(new StringReader(string));
+        TermAttribute termAttribute = (TermAttribute) tokenizer.getAttribute(TermAttribute.class);
+        try {
+            while (tokenizer.incrementToken()) {
+                list.add(termAttribute.term());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 
     public static Set<String> getEquals(Collection<String> collection1, Collection<String> collection2) {

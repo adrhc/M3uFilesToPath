@@ -23,25 +23,11 @@
 			<version>0.5.4</version>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/org.blinkenlights.jid3/JID3 -->
-		<dependency>
-			<groupId>org.blinkenlights.jid3</groupId>
-			<artifactId>JID3</artifactId>
-			<version>0.46</version>
-		</dependency>
-
 		<!-- https://mvnrepository.com/artifact/javazoom/jlayer -->
 		<dependency>
 			<groupId>javazoom</groupId>
 			<artifactId>jlayer</artifactId>
 			<version>1.0.1</version>
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/com.googlecode.soundlibs/mp3spi -->
-		<dependency>
-			<groupId>com.googlecode.soundlibs</groupId>
-			<artifactId>mp3spi</artifactId>
-			<version>1.9.5.4</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/com.googlecode.soundlibs/tritonus-share -->

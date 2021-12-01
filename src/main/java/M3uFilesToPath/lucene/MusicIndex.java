@@ -4,8 +4,6 @@ import M3uFilesToPath.m3u.M3uPlaylist;
 import M3uFilesToPath.m3u.M3uPlaylistSong;
 import M3uFilesToPath.util.Util;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.apache.lucene.analysis.standard.StandardTokenizer;
-import org.apache.lucene.analysis.tokenattributes.TermAttribute;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.index.IndexReader;
@@ -19,9 +17,7 @@ import org.apache.lucene.util.Version;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.StringReader;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -180,20 +176,6 @@ public class MusicIndex {
 			doc.add(new Field("album", "", Field.Store.YES, Field.Index.NOT_ANALYZED));
 		}
 		return doc;
-	}
-
-	public static List<String> tokenize(String string) {
-		List<String> list = new ArrayList<String>();
-		StandardTokenizer tokenizer = new StandardTokenizer(new StringReader(string));
-		TermAttribute termAttribute = (TermAttribute) tokenizer.getAttribute(TermAttribute.class);
-		try {
-			while (tokenizer.incrementToken()) {
-				list.add(termAttribute.term());
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return list;
 	}
 
 	private static IndexWriter openIndexWriter(boolean create) throws IOException {
