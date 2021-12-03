@@ -375,10 +375,7 @@ public class M3uPlaylistSong implements Comparator<M3uPlaylistSong>, Comparable<
 		}
 	}*/
 
-	/**
-	 * @return
-	 */
-	private boolean fillWithTagsJid3() {
+	private void fillWithTagsJid3() {
 		try {
 			org.farng.mp3.MP3File mp3File = constructJid3MP3File(mp3FilePathFull);
 			if (mp3File.hasID3v1Tag()) {
@@ -397,7 +394,7 @@ public class M3uPlaylistSong implements Comparator<M3uPlaylistSong>, Comparable<
 						TagConstant.genreIdToString.get(Long.valueOf(id3v1.getSongGenre())), false);
 			}
 			if (!mp3File.hasID3v2Tag()) {
-				return true;
+				return;
 			}
 
 			AbstractID3v2 id3v2 = mp3File.getID3v2Tag();
@@ -468,13 +465,10 @@ public class M3uPlaylistSong implements Comparator<M3uPlaylistSong>, Comparable<
 					putTag("jid3." + frameDescr, frameText, false);
 				}
 			}
-
-			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("ERR (jid3) reading tags for: " + mp3FilePathFull);
 		}
-		return false;
 	}
 
 	private boolean isAllowedTag(String s) {
