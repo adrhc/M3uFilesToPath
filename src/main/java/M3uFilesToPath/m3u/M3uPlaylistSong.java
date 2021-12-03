@@ -377,7 +377,7 @@ public class M3uPlaylistSong implements Comparator<M3uPlaylistSong>, Comparable<
 
 	private void fillWithTagsJid3() {
 		try {
-			org.farng.mp3.MP3File mp3File = constructJid3MP3File(mp3FilePathFull);
+			org.farng.mp3.MP3File mp3File = constructJid3MP3File();
 			if (mp3File.hasID3v1Tag()) {
 				ID3v1 id3v1 = mp3File.getID3v1Tag();
 				putTag("album", id3v1.getAlbum(), false);
@@ -483,17 +483,17 @@ public class M3uPlaylistSong implements Comparator<M3uPlaylistSong>, Comparable<
 		return false;
 	}
 
-	private MP3File constructJid3MP3File(String file) throws IOException, TagException {
+	private MP3File constructJid3MP3File() throws IOException, TagException {
 		try {
 			return new MP3File(mp3FilePathFull);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		MP3File mp3File = new MP3File();
-		mp3File.setMp3file(new File(file));
+		mp3File.setMp3file(new File(mp3FilePathFull));
 		RandomAccessFile newFile = null;
 		try {
-			newFile = new RandomAccessFile(file, "r");
+			newFile = new RandomAccessFile(mp3FilePathFull, "r");
 			try {
 				mp3File.setID3v1Tag(new ID3v1_1(newFile));
 			} catch (TagNotFoundException ex) {
@@ -552,7 +552,7 @@ public class M3uPlaylistSong implements Comparator<M3uPlaylistSong>, Comparable<
 			mp3File.setFilenameTag(FilenameTagBuilder.createFilenameTagFromMP3File(mp3File));
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			System.out.println("ERR createFileNameTagFromMP3File:\n" + file);
+			System.out.println("ERR createFileNameTagFromMP3File:\n" + mp3FilePathFull);
 		}
 		return mp3File;
 	}
@@ -590,7 +590,7 @@ public class M3uPlaylistSong implements Comparator<M3uPlaylistSong>, Comparable<
 
 	public boolean updateArtist(boolean overwrite) {
 		try {
-			org.farng.mp3.MP3File mp3File = constructJid3MP3File(mp3FilePathFull);
+			org.farng.mp3.MP3File mp3File = constructJid3MP3File();
 			ID3v1 id3v1;
 			if (mp3File.hasID3v1Tag()) {
 				id3v1 = mp3File.getID3v1Tag();
@@ -618,7 +618,7 @@ public class M3uPlaylistSong implements Comparator<M3uPlaylistSong>, Comparable<
 
 	public boolean updateAlbumArtist(boolean overwrite) {
 		try {
-			org.farng.mp3.MP3File mp3File = constructJid3MP3File(mp3FilePathFull);
+			org.farng.mp3.MP3File mp3File = constructJid3MP3File();
 			//            ID3v1 id3v1 = mp3File.getID3v1Tag();
 			AbstractID3v2 id3v2;
 			if (mp3File.hasID3v2Tag()) {
